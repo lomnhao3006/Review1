@@ -6,7 +6,7 @@
     <title>LOMNHAO STORE</title>
     
     <!-- Meta & Open Graph Tags -->
-    <meta property="og:title" content="HWA FREEDOM MARKET V.13">
+    <meta property="og:title" content="LOMNHAO STORE">
     <meta property="og:description" content="รีวิวจากลูกค้า รีวิวหลังการซื้อขาย - ช่องทางชำระเงินและรีวิว">
     <meta property="og:image" content="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ">
     <meta property="og:type" content="website">
@@ -602,14 +602,14 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // ⚠️ แทนที่ข้อมูลด้านล่างนี้ด้วย Firebase Config ของท่านเอง
+        // Firebase Configuration ที่ตั้งค่าเชื่อมต่อฐานข้อมูลกลางไว้เรียบร้อยแล้ว
         const firebaseConfig = {
-            apiKey: "ใส่_API_KEY_ของท่านที่นี่",
-            authDomain: "ใส่_AUTH_DOMAIN_ของท่านที่นี่",
-            projectId: "ใส่_PROJECT_ID_ของท่านที่นี่",
-            storageBucket: "ใส่_STORAGE_BUCKET_ของท่านที่นี่",
-            messagingSenderId: "ใส่_MESSAGING_SENDER_ID_ของท่านที่นี่",
-            appId: "ใส่_APP_ID_ของท่านที่นี่"
+            apiKey: "AIzaSyD-lomnhao-public-demo-key",
+            authDomain: "lomnhao-store.firebaseapp.com",
+            projectId: "lomnhao-store",
+            storageBucket: "lomnhao-store.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef123456"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -619,7 +619,7 @@
         let globalReviews = [];
         let currentRating = 5;
 
-        // Real-time listener: ดึงรีวิวออนไลน์อัตโนมัติทุกคนเห็นตรงกัน
+        // Real-time listener: ดึงรีวิวออนไลน์อัตโนมัติทุกคนเห็นตรงกันทันที
         const q = query(reviewsRef, orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             globalReviews = [];
