@@ -602,13 +602,14 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
+        // ⚠️ แทนที่ข้อมูลด้านล่างนี้ด้วย Firebase Config ของท่านเอง
         const firebaseConfig = {
-            apiKey: "AIzaSyD-placeholder-key",
-            authDomain: "hwa-market-v13.firebaseapp.com",
-            projectId: "hwa-market-v13",
-            storageBucket: "hwa-market-v13.appspot.com",
-            messagingSenderId: "987654321",
-            appId: "1:987654321:web:abcdef123456"
+            apiKey: "ใส่_API_KEY_ของท่านที่นี่",
+            authDomain: "ใส่_AUTH_DOMAIN_ของท่านที่นี่",
+            projectId: "ใส่_PROJECT_ID_ของท่านที่นี่",
+            storageBucket: "ใส่_STORAGE_BUCKET_ของท่านที่นี่",
+            messagingSenderId: "ใส่_MESSAGING_SENDER_ID_ของท่านที่นี่",
+            appId: "ใส่_APP_ID_ของท่านที่นี่"
         };
 
         const app = initializeApp(firebaseConfig);
