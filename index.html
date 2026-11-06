@@ -597,9 +597,8 @@
 
     <div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
 
-    <!-- True Cloud Serverless Cross-Device Sync Engine -->
+    <!-- Cloud Serverless Cross-Device Proxy Sync Engine -->
     <script>
-        // ใช้ Public JSONBin API กลางสำหรับเก็บและดึงข้อมูลข้ามเครื่องแบบ Real-time จริง
         const BIN_ID = "679f2e4fe41b4d34e47b92f7";
         const API_KEY = "$2a$10$w8kZ/s4rM1GvF2XJp0c1tO9l63s7eK5B5q3p3tN1s8t0V0u63fJ0m";
         const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
@@ -607,11 +606,14 @@
         let globalReviews = [];
         let currentRating = 5;
 
-        // ดึงข้อมูลจากเซิร์ฟเวอร์กลางออนไลน์
+        // ฟังก์ชันดึงรีวิวจากเซิร์ฟเวอร์กลางออนไลน์
         async function fetchReviewsFromServer() {
             try {
                 const response = await fetch(API_URL + "/latest", {
-                    headers: { "X-Master-Key": API_KEY }
+                    headers: { 
+                        "X-Master-Key": API_KEY,
+                        "X-Access-Key": API_KEY
+                    }
                 });
                 const data = await response.json();
                 if(data && data.record && Array.isArray(data.record.reviews)) {
@@ -626,7 +628,7 @@
             }
         }
 
-        // บันทึกและอัปเดตข้อมูลขึ้นเซิร์ฟเวอร์กลาง (ทุกคนเห็นตรงกันทันที + หลังบ้านลบปุ๊บหายปั๊บ)
+        // ฟังก์ชันบันทึกและอัปเดตข้อมูลขึ้นเซิร์ฟเวอร์กลาง (ทุกคนเห็นตรงกันทันที + หลังบ้านลบปุ๊บหายปั๊บ)
         async function saveReviewsToServer() {
             try {
                 await fetch(API_URL, {
