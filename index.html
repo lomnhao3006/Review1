@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitleMeta">LOMNHAO STORE</title>
+    <title>LOMNHAO STORE</title>
     
-    <!-- Open Graph Tags สำหรับบังคับให้ Social Media (LINE, FB) อัปเดตพรีวิวลิงก์ -->
-    <meta property="og:title" id="ogTitle" content="HWA Freedom Market V.13">
-    <meta property="og:description" id="ogDesc" content="ช่องทางชำระเงินและรีวิวร้านค้า">
-    <meta property="og:image" id="ogImage" content="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ">
+    <!-- Meta & Open Graph Tags เพื่อให้เวลาแชร์ลิงก์แล้วข้อมูลอัปเดตเป็นชื่อร้านและรูปนี้เสมอ -->
+    <meta property="og:title" content="HWA FREEDOM MARKET V.13">
+    <meta property="og:description" content="ซื้อขายผ่านกลาง BY แอดเลน - ช่องทางชำระเงินและรีวิว">
+    <meta property="og:image" content="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ">
     <meta property="og:type" content="website">
 
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -102,7 +102,7 @@
             background-color: var(--pink-soft);
         }
 
-        .header-banner img#bannerImg {
+        .header-banner img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -257,8 +257,6 @@
 
         .scb { background: linear-gradient(135deg, #4e2e80, #6e3ba7); }
         .truemoney { background: linear-gradient(135deg, #ff6b00, #ff8800); }
-        .kbank { background: linear-gradient(135deg, #138f2d, #06b431); }
-        .promptpay { background: linear-gradient(135deg, #003b64, #005691); }
 
         .payment-details h4 {
             font-size: 0.95rem;
@@ -474,39 +472,6 @@
             cursor: pointer;
         }
 
-        .admin-tab-btns {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 8px;
-            background: var(--pink-soft);
-            border: 1px solid var(--pink-main);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .tab-btn.active {
-            background: var(--pink-main);
-            color: white;
-        }
-
-        .admin-section {
-            display: none;
-        }
-
-        .admin-section.active {
-            display: block;
-        }
-
         .admin-item-row {
             display: flex;
             align-items: center;
@@ -555,17 +520,18 @@
 
     <div class="app-card">
         
+        <!-- Header Banner (ใส่ลิงก์รูปตรงๆ ในโค้ด) -->
         <div class="header-banner">
-            <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้าน">
+            <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้านจัดการรีวิว">
                 <i class="fa-solid fa-gear"></i>
             </button>
-            <img id="bannerImg" src="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ" alt="Banner ปก">
+            <img src="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ" alt="Banner ปก">
         </div>
 
         <div class="content">
             <div class="store-title">
-                <h1 id="storeTitleDisplay">LOMNHAO STORE</h1>
-                <p id="storeSubDisplay">รีวิวรีใจ รีวิวจากลูกค้าทุกคนที่น่ารัก</p>
+                <h1>LOMNHAO STORE</h1>
+                <p>รีวิวซื้อขายจากทางร้าน รีวิวจากลูกค้า</p>
             </div>
 
             <!-- VIEW 1: Main Reviews Page -->
@@ -602,7 +568,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 2: Payment Page -->
+            <!-- VIEW 2: Payment Page (ใส่รูปภาพและบัญชีล็อกตรงลงในโค้ด) -->
             <div id="page-pay" class="view-page">
                 <div class="section-box">
                     <div class="section-header">
@@ -614,7 +580,30 @@
                         <img src="https://lh3.googleusercontent.com/d/1Ui_iqHhSHS5aPp2DKdUh5HVEjeiltOVc" alt="ภาพบัญชีชำระเงิน">
                     </div>
 
-                    <div id="paymentListDisplay"></div>
+                    <div id="paymentListDisplay">
+                        <div class="payment-item">
+                            <div class="payment-info">
+                                <div class="bank-icon scb">SCB</div>
+                                <div class="payment-details">
+                                    <h4>ธนาคารกสิกรไทย</h4>
+                                    <p>1653748740</p>
+                                    <small>ชื่อบัญชี: อนงค์นุช</small>
+                                </div>
+                            </div>
+                            <button class="btn-copy" data-num="1653748740">คัดลอก</button>
+                        </div>
+                        <div class="payment-item">
+                            <div class="payment-info">
+                                <div class="bank-icon truemoney">TMN</div>
+                                <div class="payment-details">
+                                    <h4>ทรูมันนี่ วอเลท</h4>
+                                    <p>0967936500</p>
+                                    <small>ชื่อบัญชี: อนงค์นุช</small>
+                                </div>
+                            </div>
+                            <button class="btn-copy" data-num="0967936500">คัดลอก</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -630,7 +619,7 @@
         </div>
     </div>
 
-    <!-- Admin Modal -->
+    <!-- Admin Modal (เน้นจัดการลบรีวิวเท่านั้น) -->
     <div class="modal-overlay" id="adminModal">
         <div class="modal-box">
             <span class="close-modal" id="closeAdminBtn">&times;</span>
@@ -638,63 +627,14 @@
             <div id="adminLoginView">
                 <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">เข้าสู่ระบบหลังบ้าน</h3>
                 <div class="form-group">
-                    <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน">
+                    <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน (1234)">
                 </div>
                 <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button>
             </div>
 
             <div id="adminDashboardView" style="display: none;">
-                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">ระบบจัดการหลังบ้าน</h3>
-                
-                <div class="admin-tab-btns">
-                    <button class="tab-btn active" id="adminTabPayBtn">บัญชีเงิน</button>
-                    <button class="tab-btn" id="adminTabRevBtn">จัดการรีวิว</button>
-                    <button class="tab-btn" id="adminTabInfoBtn">ข้อมูลร้าน</button>
-                </div>
-
-                <div id="tab-pay" class="admin-section active">
-                    <h5 style="margin-bottom: 10px;">เพิ่มช่องทางชำระเงิน</h5>
-                    <div class="form-group">
-                        <select id="newBankType" class="form-input">
-                            <option value="scb">ธนาคารไทยพาณิชย์ (SCB)</option>
-                            <option value="truemoney">ทรูมันนี่ วอเลท (TrueMoney)</option>
-                            <option value="kbank">ธนาคารกสิกรไทย (KBank)</option>
-                            <option value="promptpay">พร้อมเพย์ (PromptPay)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="newAccountNum" class="form-input" placeholder="เลขบัญชี / เบอร์โทร">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="newAccountName" class="form-input" placeholder="ชื่อบัญชี">
-                    </div>
-                    <button class="btn-submit" id="addPayAccountBtn" style="margin-bottom: 15px;">+ เพิ่มบัญชี</button>
-                    
-                    <h5 style="margin-bottom: 10px;">รายการปัจจุบัน</h5>
-                    <div id="adminPaymentList"></div>
-                </div>
-
-                <div id="tab-reviews" class="admin-section">
-                    <h5 style="margin-bottom: 10px;">จัดการรีวิวทั้งหมด</h5>
-                    <div id="adminReviewList"></div>
-                </div>
-
-                <div id="tab-info" class="admin-section">
-                    <div class="form-group">
-                        <label>ชื่อร้านค้า/หัวข้อหลัก</label>
-                        <input type="text" id="editStoreTitle" class="form-input">
-                    </div>
-                    <div class="form-group">
-                        <label>ข้อความย่อย</label>
-                        <input type="text" id="editStoreSub" class="form-input">
-                    </div>
-                    <div class="form-group">
-                        <label>URL ภาพ Banner ปก</label>
-                        <input type="text" id="editBannerUrl" class="form-input">
-                    </div>
-                    <button class="btn-submit" id="saveInfoBtn">บันทึกข้อมูล</button>
-                </div>
-
+                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">จัดการรีวิวร้านค้า</h3>
+                <div id="adminReviewList"></div>
             </div>
         </div>
     </div>
@@ -703,26 +643,17 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const DEFAULT_DATA = {
-                storeTitle: "HWA FREEDOM MARKET V.13",
-                storeSub: "ซื้อขายผ่านกลาง BY แอดเลน",
-                bannerUrl: "https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ",
-                payments: [
-                    { id: 1, type: "scb", bankName: "ธนาคารไทยพาณิชย์", number: "2022242068", name: "ชื่อบัญชี: name nfinnts" },
-                    { id: 2, type: "truemoney", bankName: "ทรูมันนี่ วอเลท", number: "0963473713", name: "ชื่อบัญชี: name nfinnts" }
-                ],
-                reviews: [
-                    { id: 1, name: "Nanoey", rating: 5, text: "บริการดี ส่งไว พ่อค้าใจดีมากครับ!", date: "2026-03-28 14:20" },
-                    { id: 2, name: "Rina", rating: 5, text: "ใช้งานง่าย ปลอดภัยมากแนะนำเลย", date: "2026-03-28 15:05" }
-                ]
-            };
+            const DEFAULT_REVIEWS = [
+                { id: 1, name: "Nanoey", rating: 5, text: "บริการดี ส่งไว พ่อค้าใจดีมากครับ!", date: "2026-03-28 14:20" },
+                { id: 2, name: "Rina", rating: 5, text: "ใช้งานง่าย ปลอดภัยมากแนะนำเลย", date: "2026-03-28 15:05" }
+            ];
 
-            let appData = JSON.parse(localStorage.getItem('hwa_market_data')) || DEFAULT_DATA;
+            let reviewsData = JSON.parse(localStorage.getItem('hwa_reviews_data')) || DEFAULT_REVIEWS;
             let currentRating = 5;
 
-            function saveData() {
-                localStorage.setItem('hwa_market_data', JSON.stringify(appData));
-                render();
+            function saveReviews() {
+                localStorage.setItem('hwa_reviews_data', JSON.stringify(reviewsData));
+                renderReviews();
             }
 
             // Tab Navigation Logic
@@ -738,6 +669,16 @@
                 document.getElementById('page-reviews').classList.remove('active');
                 document.getElementById('navToPay').classList.add('active');
                 document.getElementById('navToReviews').classList.remove('active');
+            });
+
+            // Copy Event Listener
+            document.querySelectorAll('.btn-copy').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const num = this.getAttribute('data-num');
+                    navigator.clipboard.writeText(num).then(() => {
+                        showToast("คัดลอกเลขบัญชีแล้ว!");
+                    });
+                });
             });
 
             // Rating Stars Selection Logic
@@ -775,7 +716,7 @@
                 const now = new Date();
                 const dateStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
 
-                appData.reviews.push({
+                reviewsData.push({
                     id: Date.now(),
                     name: name,
                     rating: currentRating,
@@ -783,7 +724,7 @@
                     date: dateStr
                 });
 
-                saveData();
+                saveReviews();
                 document.getElementById('reviewerName').value = '';
                 document.getElementById('reviewText').value = '';
                 currentRating = 5;
@@ -791,62 +732,13 @@
                 showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
             });
 
-            // Render Function
-            function render() {
-                // อัปเดต Title และ Open Graph Tags (สำหรับพรีวิวเวลาแชร์ลิงก์)
-                document.title = appData.storeTitle;
-                document.getElementById('pageTitleMeta').innerText = appData.storeTitle;
-                document.getElementById('ogTitle').setAttribute('content', appData.storeTitle);
-                document.getElementById('ogDesc').setAttribute('content', `${appData.storeTitle} - ${appData.storeSub}`);
-                document.getElementById('ogImage').setAttribute('content', appData.bannerUrl);
-
-                document.getElementById('storeTitleDisplay').innerText = appData.storeTitle;
-                document.getElementById('storeSubDisplay').innerText = appData.storeSub;
-                document.getElementById('bannerImg').src = appData.bannerUrl;
-
-                // Render Payments
-                const payList = document.getElementById('paymentListDisplay');
-                payList.innerHTML = '';
-                appData.payments.forEach(pay => {
-                    const item = document.createElement('div');
-                    item.className = 'payment-item';
-                    
-                    let iconText = 'BANK';
-                    if(pay.type === 'scb') iconText = 'SCB';
-                    if(pay.type === 'truemoney') iconText = 'TMN';
-                    if(pay.type === 'kbank') iconText = 'K+';
-                    if(pay.type === 'promptpay') iconText = 'PP';
-
-                    item.innerHTML = `
-                        <div class="payment-info">
-                            <div class="bank-icon ${pay.type}">${iconText}</div>
-                            <div class="payment-details">
-                                <h4>${pay.bankName}</h4>
-                                <p>${pay.number}</p>
-                                <small>${pay.name}</small>
-                            </div>
-                        </div>
-                        <button class="btn-copy" data-num="${pay.number}">คัดลอก</button>
-                    `;
-                    payList.appendChild(item);
-                });
-
-                // Copy Event Listener Delegation
-                document.querySelectorAll('.btn-copy').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const num = this.getAttribute('data-num');
-                        navigator.clipboard.writeText(num).then(() => {
-                            showToast("คัดลอกเลขบัญชีแล้ว!");
-                        });
-                    });
-                });
-
-                // Render Reviews
+            // Render Reviews Only
+            function renderReviews() {
                 const revList = document.getElementById('reviewsDisplay');
                 revList.innerHTML = '';
-                document.getElementById('reviewCount').innerText = appData.reviews.length;
+                document.getElementById('reviewCount').innerText = reviewsData.length;
                 
-                [...appData.reviews].reverse().forEach(rev => {
+                [...reviewsData].reverse().forEach(rev => {
                     const card = document.createElement('div');
                     card.className = 'review-card';
                     
@@ -897,42 +789,20 @@
                 if (pass === '1234') {
                     document.getElementById('adminLoginView').style.display = 'none';
                     document.getElementById('adminDashboardView').style.display = 'block';
-                    loadAdminDashboard();
+                    loadAdminReviews();
                 } else {
                     alert('รหัสผ่านไม่ถูกต้อง');
                 }
             });
 
-            document.getElementById('adminTabPayBtn').addEventListener('click', function() { switchAdminTab('tab-pay', this); });
-            document.getElementById('adminTabRevBtn').addEventListener('click', function() { switchAdminTab('tab-reviews', this); });
-            document.getElementById('adminTabInfoBtn').addEventListener('click', function() { switchAdminTab('tab-info', this); });
-
-            function switchAdminTab(tabId, el) {
-                document.querySelectorAll('.admin-tab-btns .tab-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
-                el.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            }
-
-            function loadAdminDashboard() {
-                const adminPayList = document.getElementById('adminPaymentList');
-                adminPayList.innerHTML = '';
-                appData.payments.forEach(pay => {
-                    const div = document.createElement('div');
-                    div.className = 'admin-item-row';
-                    div.innerHTML = `
-                        <div>
-                            <strong>${pay.bankName}</strong><br>
-                            <small>${pay.number} (${pay.name})</small>
-                        </div>
-                        <button class="btn-del" onclick="deletePayment(${pay.id})">ลบ</button>
-                    `;
-                    adminPayList.appendChild(div);
-                });
-
+            function loadAdminReviews() {
                 const adminRevList = document.getElementById('adminReviewList');
                 adminRevList.innerHTML = '';
-                appData.reviews.forEach(rev => {
+                if(reviewsData.length === 0) {
+                    adminRevList.innerHTML = '<p style="text-align:center; color:#888;">ไม่มีรีวิวในระบบ</p>';
+                    return;
+                }
+                reviewsData.forEach(rev => {
                     const div = document.createElement('div');
                     div.className = 'admin-item-row';
                     div.innerHTML = `
@@ -940,64 +810,17 @@
                             <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
                             <small>${escapeHtml(rev.text)}</small>
                         </div>
-                        <button class="btn-del" onclick="deleteReview(${rev.id})">ลบ</button>
+                        <button class="btn-del" onclick="deleteReview(${rev.id})">ลบรีวิว</button>
                     `;
                     adminRevList.appendChild(div);
                 });
-
-                document.getElementById('editStoreTitle').value = appData.storeTitle;
-                document.getElementById('editStoreSub').value = appData.storeSub;
-                document.getElementById('editBannerUrl').value = appData.bannerUrl;
             }
 
-            window.deletePayment = function(id) {
-                appData.payments = appData.payments.filter(p => p.id !== id);
-                saveData();
-                loadAdminDashboard();
-            };
-
             window.deleteReview = function(id) {
-                appData.reviews = appData.reviews.filter(r => r.id !== id);
-                saveData();
-                loadAdminDashboard();
+                reviewsData = reviewsData.filter(r => r.id !== id);
+                saveReviews();
+                loadAdminReviews();
             };
-
-            document.getElementById('addPayAccountBtn').addEventListener('click', function() {
-                const type = document.getElementById('newBankType').value;
-                const num = document.getElementById('newAccountNum').value.trim();
-                const name = document.getElementById('newAccountName').value.trim();
-
-                if (!num || !name) {
-                    alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-                    return;
-                }
-
-                let bankName = 'ธนาคารไทยพาณิชย์';
-                if(type === 'truemoney') bankName = 'ทรูมันนี่ วอเลท';
-                if(type === 'kbank') bankName = 'ธนาคารกสิกรไทย';
-                if(type === 'promptpay') bankName = 'พร้อมเพย์';
-
-                appData.payments.push({
-                    id: Date.now(),
-                    type: type,
-                    bankName: bankName,
-                    number: num,
-                    name: 'ชื่อบัญชี: ' + name
-                });
-
-                saveData();
-                loadAdminDashboard();
-                document.getElementById('newAccountNum').value = '';
-                document.getElementById('newAccountName').value = '';
-            });
-
-            document.getElementById('saveInfoBtn').addEventListener('click', function() {
-                appData.storeTitle = document.getElementById('editStoreTitle').value;
-                appData.storeSub = document.getElementById('editStoreSub').value;
-                appData.bannerUrl = document.getElementById('editBannerUrl').value;
-                saveData();
-                alert('บันทึกข้อมูลเรียบร้อยแล้ว');
-            });
 
             // Sakura Effect
             function createSakura() {
@@ -1015,7 +838,7 @@
             }
 
             createSakura();
-            render();
+            renderReviews();
         });
     </script>
 </body>
