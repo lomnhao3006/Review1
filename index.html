@@ -127,36 +127,6 @@
             color: var(--white);
         }
 
-        /* Circle Deco Top-Left */
-        .kitty-deco {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 55px;
-            height: 55px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            border: 3px solid var(--pink-main);
-            animation: float 3s ease-in-out infinite;
-            overflow: hidden;
-            z-index: 5;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .kitty-deco img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         /* Content Body */
         .content {
             padding: 20px;
@@ -579,9 +549,6 @@
     <div class="app-card">
         
         <div class="header-banner">
-            <div class="kitty-deco" title="โลโก้โปรไฟล์">
-                <img id="circleImg" src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty.png" alt="Circle Mascot">
-            </div>
             <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้าน">
                 <i class="fa-solid fa-gear"></i>
             </button>
@@ -718,10 +685,6 @@
                         <label>URL ภาพ Banner ปก</label>
                         <input type="text" id="editBannerUrl" class="form-input">
                     </div>
-                    <div class="form-group">
-                        <label>URL ภาพวงกลมมุมบนซ้าย</label>
-                        <input type="text" id="editCircleUrl" class="form-input" placeholder="วางลิงก์รูปภาพวงกลม">
-                    </div>
                     <button class="btn-submit" id="saveInfoBtn">บันทึกข้อมูล</button>
                 </div>
 
@@ -737,7 +700,6 @@
                 storeTitle: "HWA FREEDOM MARKET V.13",
                 storeSub: "ซื้อขายผ่านกลาง BY แอดเลน",
                 bannerUrl: "https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ",
-                circleUrl: "https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty.png",
                 payments: [
                     { id: 1, type: "scb", bankName: "ธนาคารไทยพาณิชย์", number: "2022242068", name: "ชื่อบัญชี: name nfinnts" },
                     { id: 2, type: "truemoney", bankName: "ทรูมันนี่ วอเลท", number: "0963473713", name: "ชื่อบัญชี: name nfinnts" }
@@ -749,8 +711,6 @@
             };
 
             let appData = JSON.parse(localStorage.getItem('hwa_market_data')) || DEFAULT_DATA;
-            if(!appData.circleUrl) appData.circleUrl = DEFAULT_DATA.circleUrl;
-
             let currentRating = 5;
 
             function saveData() {
@@ -829,7 +789,6 @@
                 document.getElementById('storeTitleDisplay').innerText = appData.storeTitle;
                 document.getElementById('storeSubDisplay').innerText = appData.storeSub;
                 document.getElementById('bannerImg').src = appData.bannerUrl;
-                document.getElementById('circleImg').src = appData.circleUrl;
 
                 // Render Payments
                 const payList = document.getElementById('paymentListDisplay');
@@ -975,7 +934,6 @@
                 document.getElementById('editStoreTitle').value = appData.storeTitle;
                 document.getElementById('editStoreSub').value = appData.storeSub;
                 document.getElementById('editBannerUrl').value = appData.bannerUrl;
-                document.getElementById('editCircleUrl').value = appData.circleUrl;
             }
 
             window.deletePayment = function(id) {
@@ -1023,7 +981,6 @@
                 appData.storeTitle = document.getElementById('editStoreTitle').value;
                 appData.storeSub = document.getElementById('editStoreSub').value;
                 appData.bannerUrl = document.getElementById('editBannerUrl').value;
-                appData.circleUrl = document.getElementById('editCircleUrl').value;
                 saveData();
                 alert('บันทึกข้อมูลเรียบร้อยแล้ว');
             });
