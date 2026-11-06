@@ -3,14 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOMNHAO STORE</title>
-    
-    <!-- Meta & Open Graph Tags -->
-    <meta property="og:title" content="LOMNHAO STORE">
-    <meta property="og:description" content="รีวิวจากลูกค้า รีวิวหลังการซื้อขาย - ช่องทางชำระเงินและรีวิว">
-    <meta property="og:image" content="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ">
-    <meta property="og:type" content="website">
-
+    <title>HWA Freedom Market V.13 - รีวิวและช่องทางชำระเงิน</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -66,8 +59,16 @@
         }
 
         @keyframes animatePetal {
-            0% { opacity: 0.8; top: -10%; transform: translateX(0) rotate(0deg); }
-            100% { opacity: 0.2; top: 105%; transform: translateX(100px) rotate(360deg); }
+            0% {
+                opacity: 0.8;
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0.2;
+                top: 105%;
+                transform: translateX(100px) rotate(360deg);
+            }
         }
 
         /* Container Setup */
@@ -126,6 +127,33 @@
             color: var(--white);
         }
 
+        /* Kitty Mascot Deco */
+        .kitty-deco {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 2px solid var(--pink-main);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .kitty-deco img {
+            width: 38px;
+            height: 38px;
+        }
+
         /* Content Body */
         .content {
             padding: 20px;
@@ -163,7 +191,7 @@
 
         .nav-item {
             flex: 1;
-            padding: 14px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
             font-weight: 500;
@@ -174,7 +202,6 @@
             justify-content: center;
             gap: 8px;
             font-size: 0.95rem;
-            user-select: none;
         }
 
         .nav-item.active {
@@ -249,10 +276,25 @@
 
         .scb { background: linear-gradient(135deg, #4e2e80, #6e3ba7); }
         .truemoney { background: linear-gradient(135deg, #ff6b00, #ff8800); }
+        .kbank { background: linear-gradient(135deg, #138f2d, #06b431); }
+        .promptpay { background: linear-gradient(135deg, #003b64, #005691); }
 
-        .payment-details h4 { font-size: 0.95rem; color: #444; }
-        .payment-details p { font-size: 0.9rem; font-weight: 600; color: var(--pink-accent); letter-spacing: 0.5px; }
-        .payment-details small { font-size: 0.75rem; color: #777; }
+        .payment-details h4 {
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .payment-details p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--pink-accent);
+            letter-spacing: 0.5px;
+        }
+
+        .payment-details small {
+            font-size: 0.75rem;
+            color: #777;
+        }
 
         .btn-copy {
             background: var(--pink-main);
@@ -287,7 +329,16 @@
         }
 
         /* Form Inputs */
-        .form-group { margin-bottom: 12px; }
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
 
         .form-input {
             width: 100%;
@@ -299,32 +350,38 @@
             transition: border 0.3s;
         }
 
-        .form-input:focus { border-color: var(--pink-dark); }
-        textarea.form-input { resize: none; height: 70px; }
+        .form-input:focus {
+            border-color: var(--pink-dark);
+        }
+
+        textarea.form-input {
+            resize: none;
+            height: 70px;
+        }
 
         .rating-stars {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 12px;
-            padding: 5px 0;
+            cursor: pointer;
         }
 
         .rating-stars i {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: #ddd;
-            cursor: pointer;
-            transition: color 0.2s, transform 0.1s;
+            transition: color 0.2s;
         }
 
-        .rating-stars i:active { transform: scale(1.2); }
-        .rating-stars i.active { color: #ffc107; }
+        .rating-stars i.active {
+            color: #ffc107;
+        }
 
         .btn-submit {
             width: 100%;
             background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
             color: white;
             border: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 12px;
             font-weight: 600;
             font-size: 0.95rem;
@@ -333,7 +390,10 @@
             transition: all 0.2s;
         }
 
-        .btn-submit:hover { opacity: 0.95; transform: translateY(-1px); }
+        .btn-submit:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
 
         /* Review List */
         .reviews-container {
@@ -342,8 +402,14 @@
             padding-right: 5px;
         }
 
-        .reviews-container::-webkit-scrollbar { width: 5px; }
-        .reviews-container::-webkit-scrollbar-thumb { background: var(--pink-main); border-radius: 10px; }
+        .reviews-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .reviews-container::-webkit-scrollbar-thumb {
+            background: var(--pink-main);
+            border-radius: 10px;
+        }
 
         .review-card {
             background: var(--pink-soft);
@@ -360,10 +426,29 @@
             margin-bottom: 4px;
         }
 
-        .reviewer-name { font-weight: 600; font-size: 0.9rem; color: #444; }
-        .review-stars { color: #ffc107; font-size: 0.75rem; }
-        .review-text { font-size: 0.85rem; color: #666; word-break: break-word; }
-        .review-date { font-size: 0.7rem; color: #aaa; text-align: right; margin-top: 4px; }
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .review-stars {
+            color: #ffc107;
+            font-size: 0.75rem;
+        }
+
+        .review-text {
+            font-size: 0.85rem;
+            color: #666;
+            word-break: break-word;
+        }
+
+        .review-date {
+            font-size: 0.7rem;
+            color: #aaa;
+            text-align: right;
+            margin-top: 4px;
+        }
 
         /* Modal Popup Admin */
         .modal-overlay {
@@ -383,7 +468,10 @@
             transition: opacity 0.3s ease;
         }
 
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
         .modal-box {
             background: white;
@@ -407,45 +495,55 @@
             cursor: pointer;
         }
 
+        .admin-tab-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            background: var(--pink-soft);
+            border: 1px solid var(--pink-main);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .tab-btn.active {
+            background: var(--pink-main);
+            color: white;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
         .admin-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background: #f9f9f9;
             padding: 10px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             border: 1px solid #eee;
-        }
-
-        .admin-item-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-            align-items: center;
-        }
-
-        .admin-item-actions input {
-            flex: 1;
-            padding: 5px 8px;
-            font-size: 0.8rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            outline: none;
-        }
-
-        .btn-save-date {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
         }
 
         .btn-del {
             background: #ff4d4d;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -467,28 +565,38 @@
             pointer-events: none;
         }
 
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 <body>
 
+    <!-- Falling Petals Effect -->
     <div class="sakura-container" id="sakuraContainer"></div>
 
+    <!-- Main Mobile Container -->
     <div class="app-card">
+        
+        <!-- Header Banner & Kitty -->
         <div class="header-banner">
-            <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้าน">
+            <div class="kitty-deco" title="Hello Kitty">
+                <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty.png" alt="Kitty">
+            </div>
+            <button class="admin-btn" onclick="openAdminModal()" title="ระบบหลังบ้าน">
                 <i class="fa-solid fa-gear"></i>
             </button>
-            <img src="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ" alt="Banner ปก">
+            <img id="bannerImg" src="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ" alt="Banner ปก">
         </div>
 
+        <!-- Store Info -->
         <div class="content">
             <div class="store-title">
-                <h1>LOMNHAO STORE</h1>
-                <p>รีวิวจากลูกค้า รีวิวหลังการซื้อขาย</p>
+                <h1 id="storeTitleDisplay">HWA FREEDOM MARKET V.13</h1>
+                <p id="storeSubDisplay">ซื้อขายผ่านกลาง BY แอดเลน</p>
             </div>
 
-            <!-- VIEW 1: Main Reviews Page -->
+            <!-- VIEW 1: Main Reviews Page (หน้าหลัก: รวมรีวิว + เขียนรีวิว) -->
             <div id="page-reviews" class="view-page active">
                 <div class="section-box">
                     <div class="section-header">
@@ -499,16 +607,16 @@
                         <input type="text" id="reviewerName" class="form-input" placeholder="ชื่อของคุณ">
                     </div>
                     <div class="rating-stars" id="ratingStars">
-                        <i class="fa-solid fa-star active" data-value="1"></i>
-                        <i class="fa-solid fa-star active" data-value="2"></i>
-                        <i class="fa-solid fa-star active" data-value="3"></i>
-                        <i class="fa-solid fa-star active" data-value="4"></i>
-                        <i class="fa-solid fa-star active" data-value="5"></i>
+                        <i class="fa-solid fa-star" data-value="1"></i>
+                        <i class="fa-solid fa-star" data-value="2"></i>
+                        <i class="fa-solid fa-star" data-value="3"></i>
+                        <i class="fa-solid fa-star" data-value="4"></i>
+                        <i class="fa-solid fa-star" data-value="5"></i>
                     </div>
                     <div class="form-group">
                         <textarea id="reviewText" class="form-input" placeholder="เขียนรีวิวของคุณที่นี่..."></textarea>
                     </div>
-                    <button class="btn-submit" id="submitReviewBtn">
+                    <button class="btn-submit" onclick="submitReview()">
                         <i class="fa-solid fa-paper-plane"></i> ส่งรีวิว
                     </button>
                 </div>
@@ -519,12 +627,12 @@
                         <span>รีวิวจากลูกค้าทั้งหมด (<span id="reviewCount">0</span>)</span>
                     </div>
                     <div class="reviews-container" id="reviewsDisplay">
-                        <p style="text-align: center; color: #999; padding: 20px;">กำลังโหลดรีวิวจากเซิร์ฟเวอร์...</p>
+                        <!-- Dynamic Reviews -->
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW 2: Payment Page -->
+            <!-- VIEW 2: Payment Page (หน้า 2: ช่องทางชำระเงินและรูปภาพบัญชี) -->
             <div id="page-pay" class="view-page">
                 <div class="section-box">
                     <div class="section-header">
@@ -532,33 +640,13 @@
                         <span>ช่องทางชำระเงิน (How to pay)</span>
                     </div>
                     
+                    <!-- Account Image from Google Drive -->
                     <div class="account-img-preview">
                         <img src="https://lh3.googleusercontent.com/d/1Ui_iqHhSHS5aPp2DKdUh5HVEjeiltOVc" alt="ภาพบัญชีชำระเงิน">
                     </div>
 
                     <div id="paymentListDisplay">
-                        <div class="payment-item">
-                            <div class="payment-info">
-                                <div class="bank-icon scb">SCB</div>
-                                <div class="payment-details">
-                                    <h4>ธนาคารกสิกรไทย</h4>
-                                    <p>1653748740</p>
-                                    <small>ชื่อบัญชี: อนงค์นุช</small>
-                                </div>
-                            </div>
-                            <button class="btn-copy" data-num="1653748740">คัดลอก</button>
-                        </div>
-                        <div class="payment-item">
-                            <div class="payment-info">
-                                <div class="bank-icon truemoney">TMN</div>
-                                <div class="payment-details">
-                                    <h4>ทรูมันนี่ วอเลท</h4>
-                                    <p>0967936500</p>
-                                    <small>ชื่อบัญชี: อนงค์นุช</small>
-                                </div>
-                            </div>
-                            <button class="btn-copy" data-num="0967936500">คัดลอก</button>
-                        </div>
+                        <!-- Payment cards will load dynamically -->
                     </div>
                 </div>
             </div>
@@ -566,10 +654,10 @@
 
         <!-- Bottom Navigation Bar -->
         <div class="bottom-nav">
-            <div class="nav-item active" id="navToReviews">
+            <div class="nav-item active" onclick="switchPageView('page-reviews', this)">
                 <i class="fa-solid fa-star"></i> หน้ารีวิว
             </div>
-            <div class="nav-item" id="navToPay">
+            <div class="nav-item" onclick="switchPageView('page-pay', this)">
                 <i class="fa-solid fa-wallet"></i> หน้าบัญชี
             </div>
         </div>
@@ -578,183 +666,151 @@
     <!-- Admin Modal -->
     <div class="modal-overlay" id="adminModal">
         <div class="modal-box">
-            <span class="close-modal" id="closeAdminBtn">&times;</span>
+            <span class="close-modal" onclick="closeAdminModal()">&times;</span>
             
+            <!-- Login View -->
             <div id="adminLoginView">
                 <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">เข้าสู่ระบบหลังบ้าน</h3>
                 <div class="form-group">
                     <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน">
                 </div>
-                <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button>
+                <button class="btn-submit" onclick="loginAdmin()">เข้าสู่ระบบ</button>
             </div>
 
+            <!-- Dashboard View -->
             <div id="adminDashboardView" style="display: none;">
-                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">จัดการรีวิวร้านค้า</h3>
-                <div id="adminReviewList"></div>
+                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">ระบบจัดการหลังบ้าน</h3>
+                
+                <div class="admin-tab-btns">
+                    <button class="tab-btn active" onclick="switchAdminTab('tab-pay')">บัญชีเงิน</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-reviews')">จัดการรีวิว</button>
+                    <button class="tab-btn" onclick="switchAdminTab('tab-info')">ข้อมูลร้าน</button>
+                </div>
+
+                <!-- Tab 1: Manage Payments -->
+                <div id="tab-pay" class="admin-section active">
+                    <h5 style="margin-bottom: 10px;">เพิ่มช่องทางชำระเงิน</h5>
+                    <div class="form-group">
+                        <select id="newBankType" class="form-input">
+                            <option value="scb">ธนาคารไทยพาณิชย์ (SCB)</option>
+                            <option value="truemoney">ทรูมันนี่ วอเลท (TrueMoney)</option>
+                            <option value="kbank">ธนาคารกสิกรไทย (KBank)</option>
+                            <option value="promptpay">พร้อมเพย์ (PromptPay)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="newAccountNum" class="form-input" placeholder="เลขบัญชี / เบอร์โทร">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="newAccountName" class="form-input" placeholder="ชื่อบัญชี">
+                    </div>
+                    <button class="btn-submit" onclick="addPaymentAccount()" style="margin-bottom: 15px;">+ เพิ่มบัญชี</button>
+                    
+                    <h5 style="margin-bottom: 10px;">รายการปัจจุบัน</h5>
+                    <div id="adminPaymentList"></div>
+                </div>
+
+                <!-- Tab 2: Manage Reviews -->
+                <div id="tab-reviews" class="admin-section">
+                    <h5 style="margin-bottom: 10px;">จัดการรีวิวทั้งหมด</h5>
+                    <div id="adminReviewList"></div>
+                </div>
+
+                <!-- Tab 3: Store Info -->
+                <div id="tab-info" class="admin-section">
+                    <div class="form-group">
+                        <label>ชื่อร้านค้า/หัวข้อหลัก</label>
+                        <input type="text" id="editStoreTitle" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>ข้อความย่อย</label>
+                        <input type="text" id="editStoreSub" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>URL ภาพ Banner ปก</label>
+                        <input type="text" id="editBannerUrl" class="form-input">
+                    </div>
+                    <button class="btn-submit" onclick="saveStoreInfo()">บันทึกข้อมูล</button>
+                </div>
+
             </div>
         </div>
     </div>
 
+    <!-- Toast Notification -->
     <div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
 
-    <!-- True Cloud Serverless Cross-Device Sync Engine -->
     <script>
-        // ใช้ Public JSONBin API กลางสำหรับเก็บและดึงข้อมูลข้ามเครื่องแบบ Real-time จริง
-        const BIN_ID = "679f2e4fe41b4d34e47b92f7";
-        const API_KEY = "$2a$10$w8kZ/s4rM1GvF2XJp0c1tO9l63s7eK5B5q3p3tN1s8t0V0u63fJ0m";
-        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        // Data State Management (LocalStorage)
+        const DEFAULT_DATA = {
+            storeTitle: "HWA FREEDOM MARKET V.13",
+            storeSub: "ซื้อขายผ่านกลาง BY แอดเลน",
+            bannerUrl: "https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ",
+            payments: [
+                { id: 1, type: "scb", bankName: "ธนาคารไทยพาณิชย์", number: "2022242068", name: "ชื่อบัญชี: name nfinnts" },
+                { id: 2, type: "truemoney", bankName: "ทรูมันนี่ วอเลท", number: "0963473713", name: "ชื่อบัญชี: name nfinnts" }
+            ],
+            reviews: [
+                { id: 1, name: "Nanoey", rating: 5, text: "บริการดี ส่งไว พ่อค้าใจดีมากครับ!", date: "2026-03-28 14:20" },
+                { id: 2, name: "Rina", rating: 5, text: "ใช้งานง่าย ปลอดภัยมากแนะนำเลย", date: "2026-03-28 15:05" }
+            ]
+        };
 
-        let globalReviews = [];
-        let currentRating = 5;
+        let appData = JSON.parse(localStorage.getItem('hwa_market_data')) || DEFAULT_DATA;
 
-        // ดึงข้อมูลจากเซิร์ฟเวอร์กลางออนไลน์
-        async function fetchReviewsFromServer() {
-            try {
-                const response = await fetch(API_URL + "/latest", {
-                    headers: { "X-Master-Key": API_KEY }
-                });
-                const data = await response.json();
-                if(data && data.record && Array.isArray(data.record.reviews)) {
-                    globalReviews = data.record.reviews;
-                    renderReviews();
-                    if(document.getElementById('adminDashboardView').style.display === 'block') {
-                        loadAdminReviews();
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching reviews:", error);
-            }
+        function saveData() {
+            localStorage.setItem('hwa_market_data', JSON.stringify(appData));
+            render();
         }
 
-        // บันทึกและอัปเดตข้อมูลขึ้นเซิร์ฟเวอร์กลาง (ทุกคนเห็นตรงกันทันที + หลังบ้านลบปุ๊บหายปั๊บ)
-        async function saveReviewsToServer() {
-            try {
-                await fetch(API_URL, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": API_KEY
-                    },
-                    body: JSON.stringify({ reviews: globalReviews })
-                });
-                renderReviews();
-            } catch (error) {
-                console.error("Error saving reviews:", error);
-            }
-        }
-
-        // อัปเดตข้อมูลอัตโนมัติทุกๆ 2 วินาที เพื่อให้หน้าเว็บซิงค์ข้อมูลสดๆ ตลอดเวลา
-        setInterval(fetchReviewsFromServer, 2000);
-
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchReviewsFromServer();
-
-            // Tab Navigation Logic
-            document.getElementById('navToReviews').addEventListener('click', function() {
-                document.getElementById('page-reviews').classList.add('active');
-                document.getElementById('page-pay').classList.remove('active');
-                document.getElementById('navToReviews').classList.add('active');
-                document.getElementById('navToPay').classList.remove('active');
-            });
-
-            document.getElementById('navToPay').addEventListener('click', function() {
-                document.getElementById('page-pay').classList.add('active');
-                document.getElementById('page-reviews').classList.remove('active');
-                document.getElementById('navToPay').classList.add('active');
-                document.getElementById('navToReviews').classList.remove('active');
-            });
-
-            // Copy Event Listener
-            document.querySelectorAll('.btn-copy').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const num = this.getAttribute('data-num');
-                    navigator.clipboard.writeText(num).then(() => {
-                        showToast("คัดลอกเลขบัญชีแล้ว!");
-                    });
-                });
-            });
-
-            // Rating Stars Selection
-            const starElems = document.querySelectorAll('#ratingStars i');
-            starElems.forEach(star => {
-                star.addEventListener('click', function() {
-                    currentRating = parseInt(this.getAttribute('data-value'));
-                    updateStarsUI();
-                });
-            });
-
-            function updateStarsUI() {
-                starElems.forEach(star => {
-                    const val = parseInt(star.getAttribute('data-value'));
-                    if (val <= currentRating) {
-                        star.classList.remove('fa-regular');
-                        star.classList.add('fa-solid', 'active');
-                    } else {
-                        star.classList.remove('fa-solid', 'active');
-                        star.classList.add('fa-regular');
-                    }
-                });
-            }
-
-            // Submit Review Action
-            document.getElementById('submitReviewBtn').addEventListener('click', async function() {
-                const name = document.getElementById('reviewerName').value.trim();
-                const text = document.getElementById('reviewText').value.trim();
-
-                if (!name || !text) {
-                    alert('กรุณากรอกชื่อและข้อความรีวิวให้ครบถ้วนครับ');
-                    return;
-                }
-
-                // ดึงข้อมูลล่าสุดจากเซิร์ฟเวอร์ก่อนกดส่งเสมอ เพื่อป้องกันข้อมูลทับซ้อน
-                try {
-                    const res = await fetch(API_URL + "/latest", {
-                        headers: { "X-Master-Key": API_KEY }
-                    });
-                    const d = await res.json();
-                    if(d && d.record && Array.isArray(d.record.reviews)) {
-                        globalReviews = d.record.reviews;
-                    }
-                } catch(e) {}
-
-                const now = new Date();
-                const dateStr = now.getFullYear() + '-' + 
-                                String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                                String(now.getDate()).padStart(2, '0') + ' ' + 
-                                String(now.getHours()).padStart(2, '0') + ':' + 
-                                String(now.getMinutes()).padStart(2, '0');
-
-                const newReview = {
-                    id: Date.now(),
-                    name: name,
-                    rating: currentRating,
-                    text: text,
-                    date: dateStr
-                };
-
-                globalReviews.push(newReview);
-                await saveReviewsToServer();
-
-                document.getElementById('reviewerName').value = '';
-                document.getElementById('reviewText').value = '';
-                currentRating = 5;
-                updateStarsUI();
-                showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
-            });
-        });
-
-        function renderReviews() {
-            const revList = document.getElementById('reviewsDisplay');
-            if(!revList) return;
-            revList.innerHTML = '';
-            document.getElementById('reviewCount').innerText = globalReviews.length;
-
-            if(globalReviews.length === 0) {
-                revList.innerHTML = '<p style="text-align:center; color:#999; padding:15px;">ยังไม่มีรีวิว เป็นคนแรกที่รีวิวเลย!</p>';
-                return;
-            }
+        // Switch Main Views (Pages)
+        function switchPageView(pageId, el) {
+            document.querySelectorAll('.view-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
             
-            [...globalReviews].reverse().forEach(rev => {
+            document.getElementById(pageId).classList.add('active');
+            el.classList.add('active');
+        }
+
+        // Render Page
+        function render() {
+            document.getElementById('storeTitleDisplay').innerText = appData.storeTitle;
+            document.getElementById('storeSubDisplay').innerText = appData.storeSub;
+            document.getElementById('bannerImg').src = appData.bannerUrl;
+
+            // Render Payments
+            const payList = document.getElementById('paymentListDisplay');
+            payList.innerHTML = '';
+            appData.payments.forEach(pay => {
+                const item = document.createElement('div');
+                item.className = 'payment-item';
+                
+                let iconText = 'BANK';
+                if(pay.type === 'scb') iconText = 'SCB';
+                if(pay.type === 'truemoney') iconText = 'TMN';
+                if(pay.type === 'kbank') iconText = 'K+';
+                if(pay.type === 'promptpay') iconText = 'PP';
+
+                item.innerHTML = `
+                    <div class="payment-info">
+                        <div class="bank-icon ${pay.type}">${iconText}</div>
+                        <div class="payment-details">
+                            <h4>${pay.bankName}</h4>
+                            <p>${pay.number}</p>
+                            <small>${pay.name}</small>
+                        </div>
+                    </div>
+                    <button class="btn-copy" onclick="copyText('${pay.number}')">คัดลอก</button>
+                `;
+                payList.appendChild(item);
+            });
+
+            // Render Reviews
+            const revList = document.getElementById('reviewsDisplay');
+            revList.innerHTML = '';
+            document.getElementById('reviewCount').innerText = appData.reviews.length;
+            
+            [...appData.reviews].reverse().forEach(rev => {
                 const card = document.createElement('div');
                 card.className = 'review-card';
                 
@@ -769,9 +825,16 @@
                         <span class="review-stars">${stars}</span>
                     </div>
                     <div class="review-text">${escapeHtml(rev.text)}</div>
-                    <div class="review-date">${rev.date || ''}</div>
+                    <div class="review-date">${rev.date}</div>
                 `;
                 revList.appendChild(card);
+            });
+        }
+
+        // Copy Functionality
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("คัดลอกเลขบัญชีแล้ว!");
             });
         }
 
@@ -782,90 +845,182 @@
             setTimeout(() => { toast.classList.remove('show'); }, 2000);
         }
 
-        function escapeHtml(text) {
-            if(!text) return '';
-            return text.replace(/[&<>"']/g, function(m) {
-                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+        // Rating Stars Selection Logic
+        let currentRating = 5;
+        const starElems = document.querySelectorAll('#ratingStars i');
+        starElems.forEach(star => {
+            star.addEventListener('click', () => {
+                currentRating = parseInt(star.getAttribute('data-value'));
+                updateStarsUI();
+            });
+        });
+
+        function updateStarsUI() {
+            starElems.forEach(star => {
+                const val = parseInt(star.getAttribute('data-value'));
+                if (val <= currentRating) {
+                    star.classList.remove('fa-regular');
+                    star.classList.add('fa-solid', 'active');
+                } else {
+                    star.classList.remove('fa-solid', 'active');
+                    star.classList.add('fa-regular');
+                }
             });
         }
 
-        // Admin Actions
-        document.getElementById('openAdminBtn').addEventListener('click', function() {
+        // Submit Review
+        function submitReview() {
+            const name = document.getElementById('reviewerName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+
+            if (!name || !text) {
+                alert('กรุณากรอกชื่อและข้อความรีวิวให้ครบถ้วนครับ');
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
+
+            appData.reviews.push({
+                id: Date.now(),
+                name: name,
+                rating: currentRating,
+                text: text,
+                date: dateStr
+            });
+
+            saveData();
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewText').value = '';
+            currentRating = 5;
+            updateStarsUI();
+            showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
+        }
+
+        // Admin System
+        function openAdminModal() {
             document.getElementById('adminModal').classList.add('active');
             document.getElementById('adminLoginView').style.display = 'block';
             document.getElementById('adminDashboardView').style.display = 'none';
             document.getElementById('adminPasswordInput').value = '';
-        });
+        }
 
-        document.getElementById('closeAdminBtn').addEventListener('click', function() {
+        function closeAdminModal() {
             document.getElementById('adminModal').classList.remove('active');
-        });
+        }
 
-        document.getElementById('loginAdminBtn').addEventListener('click', function() {
+        function loginAdmin() {
             const pass = document.getElementById('adminPasswordInput').value;
             if (pass === '1234') {
                 document.getElementById('adminLoginView').style.display = 'none';
                 document.getElementById('adminDashboardView').style.display = 'block';
-                loadAdminReviews();
+                loadAdminDashboard();
             } else {
                 alert('รหัสผ่านไม่ถูกต้อง');
             }
-        });
-
-        function loadAdminReviews() {
-            const adminRevList = document.getElementById('adminReviewList');
-            adminRevList.innerHTML = 'กำลังโหลดข้อมูล...';
-            
-            fetch(API_URL + "/latest", {
-                headers: { "X-Master-Key": API_KEY }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data && data.record && Array.isArray(data.record.reviews)) {
-                    globalReviews = data.record.reviews;
-                }
-                adminRevList.innerHTML = '';
-                if(globalReviews.length === 0) {
-                    adminRevList.innerHTML = '<p style="text-align:center; color:#888;">ไม่มีรีวิวในระบบ</p>';
-                    return;
-                }
-                globalReviews.forEach(rev => {
-                    const div = document.createElement('div');
-                    div.className = 'admin-item-row';
-                    div.innerHTML = `
-                        <div>
-                            <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
-                            <small>${escapeHtml(rev.text)}</small>
-                        </div>
-                        <div class="admin-item-actions">
-                            <input type="text" class="edit-date-input" data-id="${rev.id}" value="${rev.date || ''}" placeholder="YYYY-MM-DD HH:MM">
-                            <button class="btn-save-date" onclick="updateReviewDate(${rev.id})">บันทึกเวลา</button>
-                            <button class="btn-del" onclick="deleteReviewItem(${rev.id})">ลบ</button>
-                        </div>
-                    `;
-                    adminRevList.appendChild(div);
-                });
-            });
         }
 
-        window.updateReviewDate = async function(id) {
-            const inputElem = document.querySelector(`.edit-date-input[data-id="${id}"]`);
-            const newDate = inputElem.value.trim();
-            const target = globalReviews.find(r => r.id === id);
-            if(target) {
-                target.date = newDate;
-                await saveReviewsToServer();
-                loadAdminReviews();
-                showToast("อัปเดตวันที่สำเร็จ!");
-            }
-        };
+        function switchAdminTab(tabId) {
+            document.querySelectorAll('.admin-tab-btns .tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
 
-        window.deleteReviewItem = async function(id) {
-            globalReviews = globalReviews.filter(r => r.id !== id);
-            await saveReviewsToServer();
-            loadAdminReviews();
-            showToast("ลบรีวิวเรียบร้อยแล้ว");
-        };
+        function loadAdminDashboard() {
+            // Load Payments into Admin
+            const adminPayList = document.getElementById('adminPaymentList');
+            adminPayList.innerHTML = '';
+            appData.payments.forEach(pay => {
+                const div = document.createElement('div');
+                div.className = 'admin-item-row';
+                div.innerHTML = `
+                    <div>
+                        <strong>${pay.bankName}</strong><br>
+                        <small>${pay.number} (${pay.name})</small>
+                    </div>
+                    <button class="btn-del" onclick="deletePayment(${pay.id})">ลบ</button>
+                `;
+                adminPayList.appendChild(div);
+            });
+
+            // Load Reviews into Admin
+            const adminRevList = document.getElementById('adminReviewList');
+            adminRevList.innerHTML = '';
+            appData.reviews.forEach(rev => {
+                const div = document.createElement('div');
+                div.className = 'admin-item-row';
+                div.innerHTML = `
+                    <div>
+                        <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
+                        <small>${escapeHtml(rev.text)}</small>
+                    </div>
+                    <button class="btn-del" onclick="deleteReview(${rev.id})">ลบ</button>
+                `;
+                adminRevList.appendChild(div);
+            });
+
+            // Load Store Info Info Admin
+            document.getElementById('editStoreTitle').value = appData.storeTitle;
+            document.getElementById('editStoreSub').value = appData.storeSub;
+            document.getElementById('editBannerUrl').value = appData.bannerUrl;
+        }
+
+        function addPaymentAccount() {
+            const type = document.getElementById('newBankType').value;
+            const num = document.getElementById('newAccountNum').value.trim();
+            const name = document.getElementById('newAccountName').value.trim();
+
+            if (!num || !name) {
+                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+                return;
+            }
+
+            let bankName = 'ธนาคารไทยพาณิชย์';
+            if(type === 'truemoney') bankName = 'ทรูมันนี่ วอเลท';
+            if(type === 'kbank') bankName = 'ธนาคารกสิกรไทย';
+            if(type === 'promptpay') bankName = 'พร้อมเพย์';
+
+            appData.payments.push({
+                id: Date.now(),
+                type: type,
+                bankName: bankName,
+                number: num,
+                name: 'ชื่อบัญชี: ' + name
+            });
+
+            saveData();
+            loadAdminDashboard();
+            document.getElementById('newAccountNum').value = '';
+            document.getElementById('newAccountName').value = '';
+        }
+
+        function deletePayment(id) {
+            appData.payments = appData.payments.filter(p => p.id !== id);
+            saveData();
+            loadAdminDashboard();
+        }
+
+        function deleteReview(id) {
+            appData.reviews = appData.reviews.filter(r => r.id !== id);
+            saveData();
+            loadAdminDashboard();
+        }
+
+        function saveStoreInfo() {
+            appData.storeTitle = document.getElementById('editStoreTitle').value;
+            appData.storeSub = document.getElementById('editStoreSub').value;
+            appData.bannerUrl = document.getElementById('editBannerUrl').value;
+            saveData();
+            alert('บันทึกข้อมูลเรียบร้อยแล้ว');
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
 
         // Sakura Effect Creator
         function createSakura() {
@@ -882,7 +1037,10 @@
             }
         }
 
+        // Initial Initialization
         createSakura();
+        updateStarsUI();
+        render();
     </script>
 </body>
 </html>
