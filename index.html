@@ -191,7 +191,7 @@
 
         .nav-item {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             text-align: center;
             cursor: pointer;
             font-weight: 500;
@@ -202,6 +202,7 @@
             justify-content: center;
             gap: 8px;
             font-size: 0.95rem;
+            user-select: none;
         }
 
         .nav-item.active {
@@ -333,13 +334,6 @@
             margin-bottom: 12px;
         }
 
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
         .form-input {
             width: 100%;
             padding: 10px 14px;
@@ -361,15 +355,20 @@
 
         .rating-stars {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 12px;
-            cursor: pointer;
+            padding: 5px 0;
         }
 
         .rating-stars i {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #ddd;
-            transition: color 0.2s;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        .rating-stars i:active {
+            transform: scale(1.2);
         }
 
         .rating-stars i.active {
@@ -381,7 +380,7 @@
             background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 12px;
             font-weight: 600;
             font-size: 0.95rem;
@@ -572,31 +571,27 @@
 </head>
 <body>
 
-    <!-- Falling Petals Effect -->
     <div class="sakura-container" id="sakuraContainer"></div>
 
-    <!-- Main Mobile Container -->
     <div class="app-card">
         
-        <!-- Header Banner & Kitty -->
         <div class="header-banner">
             <div class="kitty-deco" title="Hello Kitty">
                 <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty.png" alt="Kitty">
             </div>
-            <button class="admin-btn" onclick="openAdminModal()" title="ระบบหลังบ้าน">
+            <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้าน">
                 <i class="fa-solid fa-gear"></i>
             </button>
             <img id="bannerImg" src="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ" alt="Banner ปก">
         </div>
 
-        <!-- Store Info -->
         <div class="content">
             <div class="store-title">
                 <h1 id="storeTitleDisplay">HWA FREEDOM MARKET V.13</h1>
                 <p id="storeSubDisplay">ซื้อขายผ่านกลาง BY แอดเลน</p>
             </div>
 
-            <!-- VIEW 1: Main Reviews Page (หน้าหลัก: รวมรีวิว + เขียนรีวิว) -->
+            <!-- VIEW 1: Main Reviews Page -->
             <div id="page-reviews" class="view-page active">
                 <div class="section-box">
                     <div class="section-header">
@@ -607,16 +602,16 @@
                         <input type="text" id="reviewerName" class="form-input" placeholder="ชื่อของคุณ">
                     </div>
                     <div class="rating-stars" id="ratingStars">
-                        <i class="fa-solid fa-star" data-value="1"></i>
-                        <i class="fa-solid fa-star" data-value="2"></i>
-                        <i class="fa-solid fa-star" data-value="3"></i>
-                        <i class="fa-solid fa-star" data-value="4"></i>
-                        <i class="fa-solid fa-star" data-value="5"></i>
+                        <i class="fa-solid fa-star active" data-value="1"></i>
+                        <i class="fa-solid fa-star active" data-value="2"></i>
+                        <i class="fa-solid fa-star active" data-value="3"></i>
+                        <i class="fa-solid fa-star active" data-value="4"></i>
+                        <i class="fa-solid fa-star active" data-value="5"></i>
                     </div>
                     <div class="form-group">
                         <textarea id="reviewText" class="form-input" placeholder="เขียนรีวิวของคุณที่นี่..."></textarea>
                     </div>
-                    <button class="btn-submit" onclick="submitReview()">
+                    <button class="btn-submit" id="submitReviewBtn">
                         <i class="fa-solid fa-paper-plane"></i> ส่งรีวิว
                     </button>
                 </div>
@@ -626,13 +621,11 @@
                         <i class="fa-regular fa-comments"></i>
                         <span>รีวิวจากลูกค้าทั้งหมด (<span id="reviewCount">0</span>)</span>
                     </div>
-                    <div class="reviews-container" id="reviewsDisplay">
-                        <!-- Dynamic Reviews -->
-                    </div>
+                    <div class="reviews-container" id="reviewsDisplay"></div>
                 </div>
             </div>
 
-            <!-- VIEW 2: Payment Page (หน้า 2: ช่องทางชำระเงินและรูปภาพบัญชี) -->
+            <!-- VIEW 2: Payment Page -->
             <div id="page-pay" class="view-page">
                 <div class="section-box">
                     <div class="section-header">
@@ -640,24 +633,21 @@
                         <span>ช่องทางชำระเงิน (How to pay)</span>
                     </div>
                     
-                    <!-- Account Image from Google Drive -->
                     <div class="account-img-preview">
                         <img src="https://lh3.googleusercontent.com/d/1Ui_iqHhSHS5aPp2DKdUh5HVEjeiltOVc" alt="ภาพบัญชีชำระเงิน">
                     </div>
 
-                    <div id="paymentListDisplay">
-                        <!-- Payment cards will load dynamically -->
-                    </div>
+                    <div id="paymentListDisplay"></div>
                 </div>
             </div>
         </div>
 
         <!-- Bottom Navigation Bar -->
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="switchPageView('page-reviews', this)">
+            <div class="nav-item active" id="navToReviews">
                 <i class="fa-solid fa-star"></i> หน้ารีวิว
             </div>
-            <div class="nav-item" onclick="switchPageView('page-pay', this)">
+            <div class="nav-item" id="navToPay">
                 <i class="fa-solid fa-wallet"></i> หน้าบัญชี
             </div>
         </div>
@@ -666,28 +656,25 @@
     <!-- Admin Modal -->
     <div class="modal-overlay" id="adminModal">
         <div class="modal-box">
-            <span class="close-modal" onclick="closeAdminModal()">&times;</span>
+            <span class="close-modal" id="closeAdminBtn">&times;</span>
             
-            <!-- Login View -->
             <div id="adminLoginView">
                 <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">เข้าสู่ระบบหลังบ้าน</h3>
                 <div class="form-group">
                     <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน">
                 </div>
-                <button class="btn-submit" onclick="loginAdmin()">เข้าสู่ระบบ</button>
+                <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button>
             </div>
 
-            <!-- Dashboard View -->
             <div id="adminDashboardView" style="display: none;">
                 <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">ระบบจัดการหลังบ้าน</h3>
                 
                 <div class="admin-tab-btns">
-                    <button class="tab-btn active" onclick="switchAdminTab('tab-pay')">บัญชีเงิน</button>
-                    <button class="tab-btn" onclick="switchAdminTab('tab-reviews')">จัดการรีวิว</button>
-                    <button class="tab-btn" onclick="switchAdminTab('tab-info')">ข้อมูลร้าน</button>
+                    <button class="tab-btn active" id="adminTabPayBtn">บัญชีเงิน</button>
+                    <button class="tab-btn" id="adminTabRevBtn">จัดการรีวิว</button>
+                    <button class="tab-btn" id="adminTabInfoBtn">ข้อมูลร้าน</button>
                 </div>
 
-                <!-- Tab 1: Manage Payments -->
                 <div id="tab-pay" class="admin-section active">
                     <h5 style="margin-bottom: 10px;">เพิ่มช่องทางชำระเงิน</h5>
                     <div class="form-group">
@@ -704,19 +691,17 @@
                     <div class="form-group">
                         <input type="text" id="newAccountName" class="form-input" placeholder="ชื่อบัญชี">
                     </div>
-                    <button class="btn-submit" onclick="addPaymentAccount()" style="margin-bottom: 15px;">+ เพิ่มบัญชี</button>
+                    <button class="btn-submit" id="addPayAccountBtn" style="margin-bottom: 15px;">+ เพิ่มบัญชี</button>
                     
                     <h5 style="margin-bottom: 10px;">รายการปัจจุบัน</h5>
                     <div id="adminPaymentList"></div>
                 </div>
 
-                <!-- Tab 2: Manage Reviews -->
                 <div id="tab-reviews" class="admin-section">
                     <h5 style="margin-bottom: 10px;">จัดการรีวิวทั้งหมด</h5>
                     <div id="adminReviewList"></div>
                 </div>
 
-                <!-- Tab 3: Store Info -->
                 <div id="tab-info" class="admin-section">
                     <div class="form-group">
                         <label>ชื่อร้านค้า/หัวข้อหลัก</label>
@@ -730,61 +715,324 @@
                         <label>URL ภาพ Banner ปก</label>
                         <input type="text" id="editBannerUrl" class="form-input">
                     </div>
-                    <button class="btn-submit" onclick="saveStoreInfo()">บันทึกข้อมูล</button>
+                    <button class="btn-submit" id="saveInfoBtn">บันทึกข้อมูล</button>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
 
     <script>
-        // Data State Management (LocalStorage)
-        const DEFAULT_DATA = {
-            storeTitle: "HWA FREEDOM MARKET V.13",
-            storeSub: "ซื้อขายผ่านกลาง BY แอดเลน",
-            bannerUrl: "https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ",
-            payments: [
-                { id: 1, type: "scb", bankName: "ธนาคารไทยพาณิชย์", number: "2022242068", name: "ชื่อบัญชี: name nfinnts" },
-                { id: 2, type: "truemoney", bankName: "ทรูมันนี่ วอเลท", number: "0963473713", name: "ชื่อบัญชี: name nfinnts" }
-            ],
-            reviews: [
-                { id: 1, name: "Nanoey", rating: 5, text: "บริการดี ส่งไว พ่อค้าใจดีมากครับ!", date: "2026-03-28 14:20" },
-                { id: 2, name: "Rina", rating: 5, text: "ใช้งานง่าย ปลอดภัยมากแนะนำเลย", date: "2026-03-28 15:05" }
-            ]
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            const DEFAULT_DATA = {
+                storeTitle: "HWA FREEDOM MARKET V.13",
+                storeSub: "ซื้อขายผ่านกลาง BY แอดเลน",
+                bannerUrl: "https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ",
+                payments: [
+                    { id: 1, type: "scb", bankName: "ธนาคารไทยพาณิชย์", number: "2022242068", name: "ชื่อบัญชี: name nfinnts" },
+                    { id: 2, type: "truemoney", bankName: "ทรูมันนี่ วอเลท", number: "0963473713", name: "ชื่อบัญชี: name nfinnts" }
+                ],
+                reviews: [
+                    { id: 1, name: "Nanoey", rating: 5, text: "บริการดี ส่งไว พ่อค้าใจดีมากครับ!", date: "2026-03-28 14:20" },
+                    { id: 2, name: "Rina", rating: 5, text: "ใช้งานง่าย ปลอดภัยมากแนะนำเลย", date: "2026-03-28 15:05" }
+                ]
+            };
 
-        let appData = JSON.parse(localStorage.getItem('hwa_market_data')) || DEFAULT_DATA;
+            let appData = JSON.parse(localStorage.getItem('hwa_market_data')) || DEFAULT_DATA;
+            let currentRating = 5;
 
-        function saveData() {
-            localStorage.setItem('hwa_market_data', JSON.stringify(appData));
-            render();
-        }
+            function saveData() {
+                localStorage.setItem('hwa_market_data', JSON.stringify(appData));
+                render();
+            }
 
-        // Switch Main Views (Pages)
-        function switchPageView(pageId, el) {
-            document.querySelectorAll('.view-page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            
-            document.getElementById(pageId).classList.add('active');
-            el.classList.add('active');
-        }
+            // Tab Navigation Logic
+            document.getElementById('navToReviews').addEventListener('click', function() {
+                document.getElementById('page-reviews').classList.add('active');
+                document.getElementById('page-pay').classList.remove('active');
+                document.getElementById('navToReviews').classList.add('active');
+                document.getElementById('navToPay').classList.remove('active');
+            });
 
-        // Render Page
-        function render() {
-            document.getElementById('storeTitleDisplay').innerText = appData.storeTitle;
-            document.getElementById('storeSubDisplay').innerText = appData.storeSub;
-            document.getElementById('bannerImg').src = appData.bannerUrl;
+            document.getElementById('navToPay').addEventListener('click', function() {
+                document.getElementById('page-pay').classList.add('active');
+                document.getElementById('page-reviews').classList.remove('active');
+                document.getElementById('navToPay').classList.add('active');
+                document.getElementById('navToReviews').classList.remove('active');
+            });
 
-            // Render Payments
-            const payList = document.getElementById('paymentListDisplay');
-            payList.innerHTML = '';
-            appData.payments.forEach(pay => {
-                const item = document.createElement('div');
-                item.className = 'payment-item';
+            // Rating Stars Selection Logic
+            const starElems = document.querySelectorAll('#ratingStars i');
+            starElems.forEach(star => {
+                star.addEventListener('click', function() {
+                    currentRating = parseInt(this.getAttribute('data-value'));
+                    updateStarsUI();
+                });
+            });
+
+            function updateStarsUI() {
+                starElems.forEach(star => {
+                    const val = parseInt(star.getAttribute('data-value'));
+                    if (val <= currentRating) {
+                        star.classList.remove('fa-regular');
+                        star.classList.add('fa-solid', 'active');
+                    } else {
+                        star.classList.remove('fa-solid', 'active');
+                        star.classList.add('fa-regular');
+                    }
+                });
+            }
+
+            // Submit Review Action
+            document.getElementById('submitReviewBtn').addEventListener('click', function() {
+                const name = document.getElementById('reviewerName').value.trim();
+                const text = document.getElementById('reviewText').value.trim();
+
+                if (!name || !text) {
+                    alert('กรุณากรอกชื่อและข้อความรีวิวให้ครบถ้วนครับ');
+                    return;
+                }
+
+                const now = new Date();
+                const dateStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
+
+                appData.reviews.push({
+                    id: Date.now(),
+                    name: name,
+                    rating: currentRating,
+                    text: text,
+                    date: dateStr
+                });
+
+                saveData();
+                document.getElementById('reviewerName').value = '';
+                document.getElementById('reviewText').value = '';
+                currentRating = 5;
+                updateStarsUI();
+                showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
+            });
+
+            // Render Function
+            function render() {
+                document.getElementById('storeTitleDisplay').innerText = appData.storeTitle;
+                document.getElementById('storeSubDisplay').innerText = appData.storeSub;
+                document.getElementById('bannerImg').src = appData.bannerUrl;
+
+                // Render Payments
+                const payList = document.getElementById('paymentListDisplay');
+                payList.innerHTML = '';
+                appData.payments.forEach(pay => {
+                    const item = document.createElement('div');
+                    item.className = 'payment-item';
+                    
+                    let iconText = 'BANK';
+                    if(pay.type === 'scb') iconText = 'SCB';
+                    if(pay.type === 'truemoney') iconText = 'TMN';
+                    if(pay.type === 'kbank') iconText = 'K+';
+                    if(pay.type === 'promptpay') iconText = 'PP';
+
+                    item.innerHTML = `
+                        <div class="payment-info">
+                            <div class="bank-icon ${pay.type}">${iconText}</div>
+                            <div class="payment-details">
+                                <h4>${pay.bankName}</h4>
+                                <p>${pay.number}</p>
+                                <small>${pay.name}</small>
+                            </div>
+                        </div>
+                        <button class="btn-copy" data-num="${pay.number}">คัดลอก</button>
+                    `;
+                    payList.appendChild(item);
+                });
+
+                // Copy Event Listener Delegation
+                document.querySelectorAll('.btn-copy').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const num = this.getAttribute('data-num');
+                        navigator.clipboard.writeText(num).then(() => {
+                            showToast("คัดลอกเลขบัญชีแล้ว!");
+                        });
+                    });
+                });
+
+                // Render Reviews
+                const revList = document.getElementById('reviewsDisplay');
+                revList.innerHTML = '';
+                document.getElementById('reviewCount').innerText = appData.reviews.length;
                 
-                let iconText = 'BANK';
-                if(pay.type === 'scb') iconText = 'SCB';
-                if(pay.type === 'truemoney') iconText
+                [...appData.reviews].reverse().forEach(rev => {
+                    const card = document.createElement('div');
+                    card.className = 'review-card';
+                    
+                    let stars = '';
+                    for(let i=1; i<=5; i++) {
+                        stars += i <= rev.rating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
+                    }
+
+                    card.innerHTML = `
+                        <div class="review-header">
+                            <span class="reviewer-name">${escapeHtml(rev.name)}</span>
+                            <span class="review-stars">${stars}</span>
+                        </div>
+                        <div class="review-text">${escapeHtml(rev.text)}</div>
+                        <div class="review-date">${rev.date}</div>
+                    `;
+                    revList.appendChild(card);
+                });
+            }
+
+            function showToast(msg) {
+                const toast = document.getElementById('toast');
+                toast.innerText = msg;
+                toast.classList.add('show');
+                setTimeout(() => { toast.classList.remove('show'); }, 2000);
+            }
+
+            function escapeHtml(text) {
+                return text.replace(/[&<>"']/g, function(m) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+                });
+            }
+
+            // Admin Actions
+            document.getElementById('openAdminBtn').addEventListener('click', function() {
+                document.getElementById('adminModal').classList.add('active');
+                document.getElementById('adminLoginView').style.display = 'block';
+                document.getElementById('adminDashboardView').style.display = 'none';
+                document.getElementById('adminPasswordInput').value = '';
+            });
+
+            document.getElementById('closeAdminBtn').addEventListener('click', function() {
+                document.getElementById('adminModal').classList.remove('active');
+            });
+
+            document.getElementById('loginAdminBtn').addEventListener('click', function() {
+                const pass = document.getElementById('adminPasswordInput').value;
+                if (pass === '1234') {
+                    document.getElementById('adminLoginView').style.display = 'none';
+                    document.getElementById('adminDashboardView').style.display = 'block';
+                    loadAdminDashboard();
+                } else {
+                    alert('รหัสผ่านไม่ถูกต้อง');
+                }
+            });
+
+            document.getElementById('adminTabPayBtn').addEventListener('click', function() { switchAdminTab('tab-pay', this); });
+            document.getElementById('adminTabRevBtn').addEventListener('click', function() { switchAdminTab('tab-reviews', this); });
+            document.getElementById('adminTabInfoBtn').addEventListener('click', function() { switchAdminTab('tab-info', this); });
+
+            function switchAdminTab(tabId, el) {
+                document.querySelectorAll('.admin-tab-btns .tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+                el.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            }
+
+            function loadAdminDashboard() {
+                const adminPayList = document.getElementById('adminPaymentList');
+                adminPayList.innerHTML = '';
+                appData.payments.forEach(pay => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-item-row';
+                    div.innerHTML = `
+                        <div>
+                            <strong>${pay.bankName}</strong><br>
+                            <small>${pay.number} (${pay.name})</small>
+                        </div>
+                        <button class="btn-del" onclick="deletePayment(${pay.id})">ลบ</button>
+                    `;
+                    adminPayList.appendChild(div);
+                });
+
+                const adminRevList = document.getElementById('adminReviewList');
+                adminRevList.innerHTML = '';
+                appData.reviews.forEach(rev => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-item-row';
+                    div.innerHTML = `
+                        <div>
+                            <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
+                            <small>${escapeHtml(rev.text)}</small>
+                        </div>
+                        <button class="btn-del" onclick="deleteReview(${rev.id})">ลบ</button>
+                    `;
+                    adminRevList.appendChild(div);
+                });
+
+                document.getElementById('editStoreTitle').value = appData.storeTitle;
+                document.getElementById('editStoreSub').value = appData.storeSub;
+                document.getElementById('editBannerUrl').value = appData.bannerUrl;
+            }
+
+            window.deletePayment = function(id) {
+                appData.payments = appData.payments.filter(p => p.id !== id);
+                saveData();
+                loadAdminDashboard();
+            };
+
+            window.deleteReview = function(id) {
+                appData.reviews = appData.reviews.filter(r => r.id !== id);
+                saveData();
+                loadAdminDashboard();
+            };
+
+            document.getElementById('addPayAccountBtn').addEventListener('click', function() {
+                const type = document.getElementById('newBankType').value;
+                const num = document.getElementById('newAccountNum').value.trim();
+                const name = document.getElementById('newAccountName').value.trim();
+
+                if (!num || !name) {
+                    alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+                    return;
+                }
+
+                let bankName = 'ธนาคารไทยพาณิชย์';
+                if(type === 'truemoney') bankName = 'ทรูมันนี่ วอเลท';
+                if(type === 'kbank') bankName = 'ธนาคารกสิกรไทย';
+                if(type === 'promptpay') bankName = 'พร้อมเพย์';
+
+                appData.payments.push({
+                    id: Date.now(),
+                    type: type,
+                    bankName: bankName,
+                    number: num,
+                    name: 'ชื่อบัญชี: ' + name
+                });
+
+                saveData();
+                loadAdminDashboard();
+                document.getElementById('newAccountNum').value = '';
+                document.getElementById('newAccountName').value = '';
+            });
+
+            document.getElementById('saveInfoBtn').addEventListener('click', function() {
+                appData.storeTitle = document.getElementById('editStoreTitle').value;
+                appData.storeSub = document.getElementById('editStoreSub').value;
+                appData.bannerUrl = document.getElementById('editBannerUrl').value;
+                saveData();
+                alert('บันทึกข้อมูลเรียบร้อยแล้ว');
+            });
+
+            // Sakura Effect
+            function createSakura() {
+                const container = document.getElementById('sakuraContainer');
+                for(let i=0; i<15; i++) {
+                    const petal = document.createElement('div');
+                    petal.className = 'petal';
+                    petal.style.left = Math.random() * 100 + '%';
+                    petal.style.width = (Math.random() * 10 + 8) + 'px';
+                    petal.style.height = (Math.random() * 10 + 8) + 'px';
+                    petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    petal.style.animationDelay = (Math.random() * 5) + 's';
+                    container.appendChild(petal);
+                }
+            }
+
+            createSakura();
+            render();
+        });
+    </script>
+</body>
+</html>
