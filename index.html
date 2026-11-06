@@ -597,125 +597,148 @@
 
     <div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
 
-    <!-- Firebase Online Database SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyD-lomnhao-public-demo-key",
-            authDomain: "lomnhao-store.firebaseapp.com",
-            projectId: "lomnhao-store",
-            storageBucket: "lomnhao-store.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef123456"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const reviewsRef = collection(db, "reviews");
+    <!-- Instant Cloud Public Sync Engine -->
+    <script>
+        const API_BIN_URL = "https://api.jsonbin.io/v3/b/679f2e4fe41b4d34e47b92f7";
+        const API_KEY = "$2a$10$w8kZ/s4rM1GvF2XJp0c1tO9l63s7eK5B5q3p3tN1s8t0V0u63fJ0m";
 
         let globalReviews = [];
         let currentRating = 5;
 
-        // Real-time listener: ดึงรีวิวออนไลน์อัตโนมัติ ทุกคนที่กดลิงก์จะเห็นรีวิวตรงกันแบบสดๆ
-        const q = query(reviewsRef, orderBy("timestamp", "desc"));
-        onSnapshot(q, (snapshot) => {
-            globalReviews = [];
-            snapshot.forEach((docSnap) => {
-                globalReviews.push({ id: docSnap.id, ...docSnap.data() });
-            });
-            renderReviews();
-            if(document.getElementById('adminDashboardView').style.display === 'block') {
-                loadAdminReviews();
-            }
-        });
-
-        // Tab Navigation Logic
-        document.getElementById('navToReviews').addEventListener('click', function() {
-            document.getElementById('page-reviews').classList.add('active');
-            document.getElementById('page-pay').classList.remove('active');
-            document.getElementById('navToReviews').classList.add('active');
-            document.getElementById('navToPay').classList.remove('active');
-        });
-
-        document.getElementById('navToPay').addEventListener('click', function() {
-            document.getElementById('page-pay').classList.add('active');
-            document.getElementById('page-reviews').classList.remove('active');
-            document.getElementById('navToPay').classList.add('active');
-            document.getElementById('navToReviews').classList.remove('active');
-        });
-
-        // Copy Event Listener
-        document.querySelectorAll('.btn-copy').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const num = this.getAttribute('data-num');
-                navigator.clipboard.writeText(num).then(() => {
-                    showToast("คัดลอกเลขบัญชีแล้ว!");
+        async function fetchReviewsFromServer() {
+            try {
+                const response = await fetch(API_BIN_URL + "/latest", {
+                    headers: { "X-Master-Key": API_KEY }
                 });
-            });
-        });
-
-        // Rating Stars Selection
-        const starElems = document.querySelectorAll('#ratingStars i');
-        starElems.forEach(star => {
-            star.addEventListener('click', function() {
-                currentRating = parseInt(this.getAttribute('data-value'));
-                updateStarsUI();
-            });
-        });
-
-        function updateStarsUI() {
-            starElems.forEach(star => {
-                const val = parseInt(star.getAttribute('data-value'));
-                if (val <= currentRating) {
-                    star.classList.remove('fa-regular');
-                    star.classList.add('fa-solid', 'active');
-                } else {
-                    star.classList.remove('fa-solid', 'active');
-                    star.classList.add('fa-regular');
+                const data = await response.json();
+                if(data && data.record && Array.isArray(data.record.reviews)) {
+                    globalReviews = data.record.reviews;
+                    renderReviews();
+                    if(document.getElementById('adminDashboardView').style.display === 'block') {
+                        loadAdminReviews();
+                    }
                 }
-            });
+            } catch (error) {
+                console.error("Error fetching reviews:", error);
+            }
         }
 
-        // Submit Review to Online Database
-        document.getElementById('submitReviewBtn').addEventListener('click', async function() {
-            const name = document.getElementById('reviewerName').value.trim();
-            const text = document.getElementById('reviewText').value.trim();
+        async function saveReviewsToServer() {
+            try {
+                await fetch(API_BIN_URL, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Master-Key": API_KEY
+                    },
+                    body: JSON.stringify({ reviews: globalReviews })
+                });
+                renderReviews();
+            } catch (error) {
+                console.error("Error saving reviews:", error);
+            }
+        }
 
-            if (!name || !text) {
-                alert('กรุณากรอกชื่อและข้อความรีวิวให้ครบถ้วนครับ');
-                return;
+        // ดึงข้อมูลใหม่ทุกๆ 2 วินาทีเพื่อให้ทุกคนเห็นรีวิวตรงกันแบบ Real-time
+        setInterval(fetchReviewsFromServer, 2000);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchReviewsFromServer();
+
+            // Tab Navigation Logic
+            document.getElementById('navToReviews').addEventListener('click', function() {
+                document.getElementById('page-reviews').classList.add('active');
+                document.getElementById('page-pay').classList.remove('active');
+                document.getElementById('navToReviews').classList.add('active');
+                document.getElementById('navToPay').classList.remove('active');
+            });
+
+            document.getElementById('navToPay').addEventListener('click', function() {
+                document.getElementById('page-pay').classList.add('active');
+                document.getElementById('page-reviews').classList.remove('active');
+                document.getElementById('navToPay').classList.add('active');
+                document.getElementById('navToReviews').classList.remove('active');
+            });
+
+            // Copy Event Listener
+            document.querySelectorAll('.btn-copy').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const num = this.getAttribute('data-num');
+                    navigator.clipboard.writeText(num).then(() => {
+                        showToast("คัดลอกเลขบัญชีแล้ว!");
+                    });
+                });
+            });
+
+            // Rating Stars Selection
+            const starElems = document.querySelectorAll('#ratingStars i');
+            starElems.forEach(star => {
+                star.addEventListener('click', function() {
+                    currentRating = parseInt(this.getAttribute('data-value'));
+                    updateStarsUI();
+                });
+            });
+
+            function updateStarsUI() {
+                starElems.forEach(star => {
+                    const val = parseInt(star.getAttribute('data-value'));
+                    if (val <= currentRating) {
+                        star.classList.remove('fa-regular');
+                        star.classList.add('fa-solid', 'active');
+                    } else {
+                        star.classList.remove('fa-solid', 'active');
+                        star.classList.add('fa-regular');
+                    }
+                });
             }
 
-            const now = new Date();
-            const dateStr = now.getFullYear() + '-' + 
-                            String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                            String(now.getDate()).padStart(2, '0') + ' ' + 
-                            String(now.getHours()).padStart(2, '0') + ':' + 
-                            String(now.getMinutes()).padStart(2, '0');
+            // Submit Review Action
+            document.getElementById('submitReviewBtn').addEventListener('click', async function() {
+                const name = document.getElementById('reviewerName').value.trim();
+                const text = document.getElementById('reviewText').value.trim();
 
-            try {
-                await addDoc(reviewsRef, {
+                if (!name || !text) {
+                    alert('กรุณากรอกชื่อและข้อความรีวิวให้ครบถ้วนครับ');
+                    return;
+                }
+
+                const now = new Date();
+                const dateStr = now.getFullYear() + '-' + 
+                                String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                                String(now.getDate()).padStart(2, '0') + ' ' + 
+                                String(now.getHours()).padStart(2, '0') + ':' + 
+                                String(now.getMinutes()).padStart(2, '0');
+
+                const newReview = {
+                    id: Date.now(),
                     name: name,
                     rating: currentRating,
                     text: text,
-                    date: dateStr,
-                    timestamp: Date.now()
-                });
+                    date: dateStr
+                };
+
+                // ดึงข้อมูลล่าสุดก่อนเพื่อป้องกันการเขียนทับซ้อน
+                try {
+                    const res = await fetch(API_BIN_URL + "/latest", {
+                        headers: { "X-Master-Key": API_KEY }
+                    });
+                    const d = await res.json();
+                    if(d && d.record && Array.isArray(d.record.reviews)) {
+                        globalReviews = d.record.reviews;
+                    }
+                } catch(e) {}
+
+                globalReviews.push(newReview);
+                await saveReviewsToServer();
 
                 document.getElementById('reviewerName').value = '';
                 document.getElementById('reviewText').value = '';
                 currentRating = 5;
                 updateStarsUI();
                 showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
-            } catch (error) {
-                console.error("Error adding review: ", error);
-                showToast("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
-            }
+            });
         });
 
-        // Render Reviews List
         function renderReviews() {
             const revList = document.getElementById('reviewsDisplay');
             if(!revList) return;
@@ -727,7 +750,7 @@
                 return;
             }
             
-            globalReviews.forEach(rev => {
+            [...globalReviews].reverse().forEach(rev => {
                 const card = document.createElement('div');
                 card.className = 'review-card';
                 
@@ -802,43 +825,32 @@
                     </div>
                     <div class="admin-item-actions">
                         <input type="text" class="edit-date-input" data-id="${rev.id}" value="${rev.date || ''}" placeholder="YYYY-MM-DD HH:MM">
-                        <button class="btn-save-date" data-id="${rev.id}">บันทึกเวลา</button>
-                        <button class="btn-del" data-id="${rev.id}">ลบ</button>
+                        <button class="btn-save-date" onclick="updateReviewDate(${rev.id})">บันทึกเวลา</button>
+                        <button class="btn-del" onclick="deleteReviewItem(${rev.id})">ลบ</button>
                     </div>
                 `;
                 adminRevList.appendChild(div);
             });
-
-            // Save Date Action
-            document.querySelectorAll('.btn-save-date').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const docId = this.getAttribute('data-id');
-                    const inputElem = document.querySelector(`.edit-date-input[data-id="${docId}"]`);
-                    const newDate = inputElem.value.trim();
-
-                    try {
-                        const docRef = doc(db, "reviews", docId);
-                        await updateDoc(docRef, { date: newDate });
-                        showToast("อัปเดตวันที่สำเร็จ!");
-                    } catch (e) {
-                        alert("ไม่สามารถอัปเดตวันที่ได้ กรุณาลองใหม่");
-                    }
-                });
-            });
-
-            // Delete Review Action
-            document.querySelectorAll('.btn-del').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const docId = this.getAttribute('data-id');
-                    try {
-                        await deleteDoc(doc(db, "reviews", docId));
-                        showToast("ลบรีวิวเรียบร้อยแล้ว");
-                    } catch (e) {
-                        alert("ไม่สามารถลบได้ กรุณาลองใหม่");
-                    }
-                });
-            });
         }
+
+        window.updateReviewDate = async function(id) {
+            const inputElem = document.querySelector(`.edit-date-input[data-id="${id}"]`);
+            const newDate = inputElem.value.trim();
+            const target = globalReviews.find(r => r.id === id);
+            if(target) {
+                target.date = newDate;
+                await saveReviewsToServer();
+                loadAdminReviews();
+                showToast("อัปเดตวันที่สำเร็จ!");
+            }
+        };
+
+        window.deleteReviewItem = async function(id) {
+            globalReviews = globalReviews.filter(r => r.id !== id);
+            await saveReviewsToServer();
+            loadAdminReviews();
+            showToast("ลบรีวิวเรียบร้อยแล้ว");
+        };
 
         // Sakura Effect Creator
         function createSakura() {
