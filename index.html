@@ -602,7 +602,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // Firebase Configuration (เชื่อมต่อฐานข้อมูลกลาง)
         const firebaseConfig = {
             apiKey: "AIzaSyD-placeholder-key",
             authDomain: "hwa-market-v13.firebaseapp.com",
@@ -619,7 +618,7 @@
         let globalReviews = [];
         let currentRating = 5;
 
-        // Real-time listener
+        // Real-time listener: ดึงรีวิวออนไลน์อัตโนมัติทุกคนเห็นตรงกัน
         const q = query(reviewsRef, orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             globalReviews = [];
