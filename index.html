@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HWA Freedom Market V.13 - รวมลิงก์ชำระเงินและรีวิว</title>
+    <title>HWA Freedom Market V.13 - รีวิวและช่องทางชำระเงิน</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -244,7 +244,7 @@
             font-size: 1.2rem;
         }
 
-        /* Payment List */
+        /* Payment List & Account Image */
         .payment-item {
             display: flex;
             align-items: center;
@@ -312,6 +312,20 @@
         .btn-copy:hover {
             background: var(--pink-dark);
             transform: translateY(-2px);
+        }
+
+        .account-img-preview {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 2px solid var(--pink-soft);
+        }
+
+        .account-img-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* Form Inputs */
@@ -582,18 +596,8 @@
                 <p id="storeSubDisplay">ซื้อขายผ่านกลาง BY แอดเลน</p>
             </div>
 
-            <!-- VIEW 1: Accounts & Pay (หน้าชำระเงิน + เขียนรีวิว) -->
-            <div id="page-pay" class="view-page active">
-                <div class="section-box">
-                    <div class="section-header">
-                        <i class="fa-regular fa-credit-card"></i>
-                        <span>ช่องทางชำระเงิน (How to pay)</span>
-                    </div>
-                    <div id="paymentListDisplay">
-                        <!-- Payment cards will load dynamically -->
-                    </div>
-                </div>
-
+            <!-- VIEW 1: Main Reviews Page (หน้าหลัก: รวมรีวิว + เขียนรีวิว) -->
+            <div id="page-reviews" class="view-page active">
                 <div class="section-box">
                     <div class="section-header">
                         <i class="fa-regular fa-pen-to-square"></i>
@@ -616,10 +620,7 @@
                         <i class="fa-solid fa-paper-plane"></i> ส่งรีวิว
                     </button>
                 </div>
-            </div>
 
-            <!-- VIEW 2: All Reviews Page (หน้ารวมรีวิวทั้งหมด) -->
-            <div id="page-reviews" class="view-page">
                 <div class="section-box">
                     <div class="section-header">
                         <i class="fa-regular fa-comments"></i>
@@ -630,15 +631,34 @@
                     </div>
                 </div>
             </div>
+
+            <!-- VIEW 2: Payment Page (หน้า 2: ช่องทางชำระเงินและรูปภาพบัญชี) -->
+            <div id="page-pay" class="view-page">
+                <div class="section-box">
+                    <div class="section-header">
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>ช่องทางชำระเงิน (How to pay)</span>
+                    </div>
+                    
+                    <!-- Account Image from Google Drive -->
+                    <div class="account-img-preview">
+                        <img src="https://lh3.googleusercontent.com/d/1Ui_iqHhSHS5aPp2DKdUh5HVEjeiltOVc" alt="ภาพบัญชีชำระเงิน">
+                    </div>
+
+                    <div id="paymentListDisplay">
+                        <!-- Payment cards will load dynamically -->
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Bottom Navigation Bar -->
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="switchPageView('page-pay', this)">
-                <i class="fa-solid fa-wallet"></i> บัญชีชำระเงิน
+            <div class="nav-item active" onclick="switchPageView('page-reviews', this)">
+                <i class="fa-solid fa-star"></i> หน้ารีวิว
             </div>
-            <div class="nav-item" onclick="switchPageView('page-reviews', this)">
-                <i class="fa-solid fa-star"></i> รีวิวทั้งหมด
+            <div class="nav-item" onclick="switchPageView('page-pay', this)">
+                <i class="fa-solid fa-wallet"></i> หน้าบัญชี
             </div>
         </div>
     </div>
@@ -767,260 +787,4 @@
                 
                 let iconText = 'BANK';
                 if(pay.type === 'scb') iconText = 'SCB';
-                if(pay.type === 'truemoney') iconText = 'TMN';
-                if(pay.type === 'kbank') iconText = 'K+';
-                if(pay.type === 'promptpay') iconText = 'PP';
-
-                item.innerHTML = `
-                    <div class="payment-info">
-                        <div class="bank-icon ${pay.type}">${iconText}</div>
-                        <div class="payment-details">
-                            <h4>${pay.bankName}</h4>
-                            <p>${pay.number}</p>
-                            <small>${pay.name}</small>
-                        </div>
-                    </div>
-                    <button class="btn-copy" onclick="copyText('${pay.number}')">คัดลอก</button>
-                `;
-                payList.appendChild(item);
-            });
-
-            // Render Reviews
-            const revList = document.getElementById('reviewsDisplay');
-            revList.innerHTML = '';
-            document.getElementById('reviewCount').innerText = appData.reviews.length;
-            
-            [...appData.reviews].reverse().forEach(rev => {
-                const card = document.createElement('div');
-                card.className = 'review-card';
-                
-                let stars = '';
-                for(let i=1; i<=5; i++) {
-                    stars += i <= rev.rating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
-                }
-
-                card.innerHTML = `
-                    <div class="review-header">
-                        <span class="reviewer-name">${escapeHtml(rev.name)}</span>
-                        <span class="review-stars">${stars}</span>
-                    </div>
-                    <div class="review-text">${escapeHtml(rev.text)}</div>
-                    <div class="review-date">${rev.date}</div>
-                `;
-                revList.appendChild(card);
-            });
-        }
-
-        // Copy Functionality
-        function copyText(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast("คัดลอกเลขบัญชีแล้ว!");
-            });
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 2000);
-        }
-
-        // Rating Stars Selection Logic
-        let currentRating = 5;
-        const starElems = document.querySelectorAll('#ratingStars i');
-        starElems.forEach(star => {
-            star.addEventListener('click', () => {
-                currentRating = parseInt(star.getAttribute('data-value'));
-                updateStarsUI();
-            });
-        });
-
-        function updateStarsUI() {
-            starElems.forEach(star => {
-                const val = parseInt(star.getAttribute('data-value'));
-                if (val <= currentRating) {
-                    star.classList.remove('fa-regular');
-                    star.classList.add('fa-solid', 'active');
-                } else {
-                    star.classList.remove('fa-solid', 'active');
-                    star.classList.add('fa-regular');
-                }
-            });
-        }
-
-        // Submit Review
-        function submitReview() {
-            const name = document.getElementById('reviewerName').value.trim();
-            const text = document.getElementById('reviewText').value.trim();
-
-            if (!name || !text) {
-                alert('กรุณากรอกชื่อและข้อความรีวิวให้ครบถ้วนครับ');
-                return;
-            }
-
-            const now = new Date();
-            const dateStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
-
-            appData.reviews.push({
-                id: Date.now(),
-                name: name,
-                rating: currentRating,
-                text: text,
-                date: dateStr
-            });
-
-            saveData();
-            document.getElementById('reviewerName').value = '';
-            document.getElementById('reviewText').value = '';
-            currentRating = 5;
-            updateStarsUI();
-            showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
-        }
-
-        // Admin System
-        function openAdminModal() {
-            document.getElementById('adminModal').classList.add('active');
-            document.getElementById('adminLoginView').style.display = 'block';
-            document.getElementById('adminDashboardView').style.display = 'none';
-            document.getElementById('adminPasswordInput').value = '';
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.remove('active');
-        }
-
-        function loginAdmin() {
-            const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === '1234') {
-                document.getElementById('adminLoginView').style.display = 'none';
-                document.getElementById('adminDashboardView').style.display = 'block';
-                loadAdminDashboard();
-            } else {
-                alert('รหัสผ่านไม่ถูกต้อง');
-            }
-        }
-
-        function switchAdminTab(tabId) {
-            document.querySelectorAll('.admin-tab-btns .tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        }
-
-        function loadAdminDashboard() {
-            // Load Payments into Admin
-            const adminPayList = document.getElementById('adminPaymentList');
-            adminPayList.innerHTML = '';
-            appData.payments.forEach(pay => {
-                const div = document.createElement('div');
-                div.className = 'admin-item-row';
-                div.innerHTML = `
-                    <div>
-                        <strong>${pay.bankName}</strong><br>
-                        <small>${pay.number} (${pay.name})</small>
-                    </div>
-                    <button class="btn-del" onclick="deletePayment(${pay.id})">ลบ</button>
-                `;
-                adminPayList.appendChild(div);
-            });
-
-            // Load Reviews into Admin
-            const adminRevList = document.getElementById('adminReviewList');
-            adminRevList.innerHTML = '';
-            appData.reviews.forEach(rev => {
-                const div = document.createElement('div');
-                div.className = 'admin-item-row';
-                div.innerHTML = `
-                    <div>
-                        <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
-                        <small>${escapeHtml(rev.text)}</small>
-                    </div>
-                    <button class="btn-del" onclick="deleteReview(${rev.id})">ลบ</button>
-                `;
-                adminRevList.appendChild(div);
-            });
-
-            // Load Store Info Info Admin
-            document.getElementById('editStoreTitle').value = appData.storeTitle;
-            document.getElementById('editStoreSub').value = appData.storeSub;
-            document.getElementById('editBannerUrl').value = appData.bannerUrl;
-        }
-
-        function addPaymentAccount() {
-            const type = document.getElementById('newBankType').value;
-            const num = document.getElementById('newAccountNum').value.trim();
-            const name = document.getElementById('newAccountName').value.trim();
-
-            if (!num || !name) {
-                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-                return;
-            }
-
-            let bankName = 'ธนาคารไทยพาณิชย์';
-            if(type === 'truemoney') bankName = 'ทรูมันนี่ วอเลท';
-            if(type === 'kbank') bankName = 'ธนาคารกสิกรไทย';
-            if(type === 'promptpay') bankName = 'พร้อมเพย์';
-
-            appData.payments.push({
-                id: Date.now(),
-                type: type,
-                bankName: bankName,
-                number: num,
-                name: 'ชื่อบัญชี: ' + name
-            });
-
-            saveData();
-            loadAdminDashboard();
-            document.getElementById('newAccountNum').value = '';
-            document.getElementById('newAccountName').value = '';
-        }
-
-        function deletePayment(id) {
-            appData.payments = appData.payments.filter(p => p.id !== id);
-            saveData();
-            loadAdminDashboard();
-        }
-
-        function deleteReview(id) {
-            appData.reviews = appData.reviews.filter(r => r.id !== id);
-            saveData();
-            loadAdminDashboard();
-        }
-
-        function saveStoreInfo() {
-            appData.storeTitle = document.getElementById('editStoreTitle').value;
-            appData.storeSub = document.getElementById('editStoreSub').value;
-            appData.bannerUrl = document.getElementById('editBannerUrl').value;
-            saveData();
-            alert('บันทึกข้อมูลเรียบร้อยแล้ว');
-        }
-
-        function escapeHtml(text) {
-            return text.replace(/[&<>"']/g, function(m) {
-                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
-            });
-        }
-
-        // Sakura Effect Creator
-        function createSakura() {
-            const container = document.getElementById('sakuraContainer');
-            for(let i=0; i<15; i++) {
-                const petal = document.createElement('div');
-                petal.className = 'petal';
-                petal.style.left = Math.random() * 100 + '%';
-                petal.style.width = (Math.random() * 10 + 8) + 'px';
-                petal.style.height = (Math.random() * 10 + 8) + 'px';
-                petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                petal.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(petal);
-            }
-        }
-
-        // Initial Initialization
-        createSakura();
-        updateStarsUI();
-        render();
-    </script>
-</body>
-</html>
+                if(pay.type === 'truemoney') iconText
