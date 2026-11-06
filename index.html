@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOMNHAO STORE</title>
+    
+    <!-- Meta & Open Graph Tags -->
+    <meta property="og:title" content="HWA FREEDOM MARKET V.13">
+    <meta property="og:description" content="รีวิวจากลูกค้า รีวิวหลังการซื้อขายของทางร้าน - ช่องทางชำระเงินและรีวิว">
+    <meta property="og:image" content="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ">
+    <meta property="og:type" content="website">
+
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --pink-main: #ffb7c5;
+            --pink-soft: #fff0f3;
+            --pink-dark: #ff85a1;
+            --pink-accent: #ff477e;
+            --text-color: #5c4b51;
+            --white: #ffffff;
+            --card-shadow: 0 8px 24px rgba(255, 183, 197, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background-color: #fff9fa;
+            background-image: radial-gradient(#ffe3e8 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 10px 80px 10px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Sakura Falling Animation */
+        .sakura-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(135deg, #ffc0cb, #ff69b4);
+            border-radius: 15px 0 15px 0;
+            opacity: 0.7;
+            animation: animatePetal 10s linear infinite;
+        }
+
+        @keyframes animatePetal {
+            0% { opacity: 0.8; top: -10%; transform: translateX(0) rotate(0deg); }
+            100% { opacity: 0.2; top: 105%; transform: translateX(100px) rotate(360deg); }
+        }
+
+        /* Container Setup */
+        .app-card {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 30px;
+            border: 4px solid var(--pink-main);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            padding-bottom: 20px;
+        }
+
+        /* Header Banner */
+        .header-banner {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--pink-soft);
+        }
+
+        .header-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .admin-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--pink-dark);
+            border: 2px solid var(--pink-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+
+        .admin-btn:hover {
+            transform: rotate(45deg) scale(1.1);
+            background: var(--pink-main);
+            color: var(--white);
+        }
+
+        /* Content Body */
+        .content {
+            padding: 20px;
+        }
+
+        .store-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .store-title h1 {
+            font-size: 1.4rem;
+            color: var(--pink-dark);
+            margin-bottom: 5px;
+        }
+
+        .store-title p {
+            font-size: 0.9rem;
+            color: #888;
+            background: var(--pink-soft);
+            display: inline-block;
+            padding: 4px 15px;
+            border-radius: 20px;
+        }
+
+        /* Navigation Bar (Tabs) */
+        .bottom-nav {
+            display: flex;
+            background: #fff;
+            border-top: 2px solid var(--pink-soft);
+            margin-top: 10px;
+            border-radius: 0 0 25px 25px;
+            overflow: hidden;
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            color: #888;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            user-select: none;
+        }
+
+        .nav-item.active {
+            color: var(--pink-dark);
+            background: var(--pink-soft);
+            font-weight: 600;
+            border-bottom: 3px solid var(--pink-dark);
+        }
+
+        /* Views Setup */
+        .view-page {
+            display: none;
+        }
+
+        .view-page.active {
+            display: block;
+        }
+
+        /* Section Styling */
+        .section-box {
+            background: var(--white);
+            border: 2px dashed var(--pink-main);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--pink-dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .section-header i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        /* Payment List & Account Image */
+        .payment-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--pink-soft);
+            border-radius: 15px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+        }
+
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bank-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .scb { background: linear-gradient(135deg, #4e2e80, #6e3ba7); }
+        .truemoney { background: linear-gradient(135deg, #ff6b00, #ff8800); }
+
+        .payment-details h4 { font-size: 0.95rem; color: #444; }
+        .payment-details p { font-size: 0.9rem; font-weight: 600; color: var(--pink-accent); letter-spacing: 0.5px; }
+        .payment-details small { font-size: 0.75rem; color: #777; }
+
+        .btn-copy {
+            background: var(--pink-main);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(255, 133, 161, 0.4);
+        }
+
+        .btn-copy:hover {
+            background: var(--pink-dark);
+            transform: translateY(-2px);
+        }
+
+        .account-img-preview {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 2px solid var(--pink-soft);
+        }
+
+        .account-img-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Form Inputs */
+        .form-group { margin-bottom: 12px; }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #ffd1dc;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-input:focus { border-color: var(--pink-dark); }
+        textarea.form-input { resize: none; height: 70px; }
+
+        .rating-stars {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 5px 0;
+        }
+
+        .rating-stars i {
+            font-size: 1.6rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        .rating-stars i:active { transform: scale(1.2); }
+        .rating-stars i.active { color: #ffc107; }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 133, 161, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover { opacity: 0.95; transform: translateY(-1px); }
+
+        /* Review List */
+        .reviews-container {
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .reviews-container::-webkit-scrollbar { width: 5px; }
+        .reviews-container::-webkit-scrollbar-thumb { background: var(--pink-main); border-radius: 10px; }
+
+        .review-card {
+            background: var(--pink-soft);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--pink-dark);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .reviewer-name { font-weight: 600; font-size: 0.9rem; color: #444; }
+        .review-stars { color: #ffc107; font-size: 0.75rem; }
+        .review-text { font-size: 0.85rem; color: #666; word-break: break-word; }
+        .review-date { font-size: 0.7rem; color: #aaa; text-align: right; margin-top: 4px; }
+
+        /* Modal Popup Admin */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .modal-box {
+            background: white;
+            width: 90%;
+            max-width: 440px;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            padding: 20px;
+            border: 3px solid var(--pink-main);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.2rem;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .admin-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #eee;
+        }
+
+        .btn-del {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            z-index: 200;
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="sakura-container" id="sakuraContainer"></div>
+
+    <div class="app-card">
+        <div class="header-banner">
+            <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้านจัดการรีวิว">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+            <img src="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ" alt="Banner ปก">
+        </div>
+
+        <div class="content">
+            <div class="store-title">
+                <h1>LOMNHAO STORE</h1>
+                <p>รีวิวจากลูกค้า รีวิวหลังการซื้อขายของทางร้าน</p>
+            </div>
+
+            <!-- VIEW 1: Main Reviews Page -->
+            <div id="page-reviews" class="view-page active">
+                <div class="section-box">
+                    <div class="section-header">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                        <span>เขียนรีวิวร้านค้า</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="reviewerName" class="form-input" placeholder="ชื่อของคุณ">
+                    </div>
+                    <div class="rating-stars" id="ratingStars">
+                        <i class="fa-solid fa-star active" data-value="1"></i>
+                        <i class="fa-solid fa-star active" data-value="2"></i>
+                        <i class="fa-solid fa-star active" data-value="3"></i>
+                        <i class="fa-solid fa-star active" data-value="4"></i>
+                        <i class="fa-solid fa-star active" data-value="5"></i>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="reviewText" class="form-input" placeholder="เขียนรีวิวของคุณที่นี่..."></textarea>
+                    </div>
+                    <button class="btn-submit" id="submitReviewBtn">
+                        <i class="fa-solid fa-paper-plane"></i> ส่งรีวิว
+                    </button>
+                </div>
+
+                <div class="section-box">
+                    <div class="section-header">
+                        <i class="fa-regular fa-comments"></i>
+                        <span>รีวิวจากลูกค้าทั้งหมด (<span id="reviewCount">0</span>)</span>
+                    </div>
+                    <div class="reviews-container" id="reviewsDisplay">
+                        <p style="text-align: center; color: #999; padding: 20px;">กำลังโหลดรีวิว...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: Payment Page -->
+            <div id="page-pay" class="view-page">
+                <div class="section-box">
+                    <div class="section-header">
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>ช่องทางชำระเงิน (How to pay)</span>
+                    </div>
+                    
+                    <div class="account-img-preview">
+                        <img src="https://lh3.googleusercontent.com/d/1Ui_iqHhSHS5aPp2DKdUh5HVEjeiltOVc" alt="ภาพบัญชีชำระเงิน">
+                    </div>
+
+                    <div id="paymentListDisplay">
+                        <div class="payment-item">
+                            <div class="payment-info">
+                                <div class="bank-icon scb">K PLUS</div>
+                                <div class="payment-details">
+                                    <h4>ธนาคารกสิกรไทย</h4>
+                                    <p>1653748740</p>
+                                    <small>ชื่อบัญชี: อนงค์นุช</small>
+                                </div>
+                            </div>
+                            <button class="btn-copy" data-num="1653748740">คัดลอก</button>
+                        </div>
+                        <div class="payment-item">
+                            <div class="payment-info">
+                                <div class="bank-icon truemoney">TMN</div>
+                                <div class="payment-details">
+                                    <h4>ทรูมันนี่ วอเลท</h4>
+                                    <p>0967936500</p>
+                                    <small>ชื่อบัญชี: อนงค์นุช</small>
+                                </div>
+                            </div>
+                            <button class="btn-copy" data-num="0967936500">คัดลอก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bottom-nav">
+            <div class="nav-item active" id="navToReviews">
+                <i class="fa-solid fa-star"></i> หน้ารีวิว
+            </div>
+            <div class="nav-item" id="navToPay">
+                <i class="fa-solid fa-wallet"></i> หน้าบัญชี
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-box">
+            <span class="close-modal" id="closeAdminBtn">&times;</span>
+            
+            <div id="adminLoginView">
+                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">เข้าสู่ระบบหลังบ้าน</h3>
+                <div class="form-group">
+                    <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน ">
+                </div>
+                <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button
+            </div>
+
+            <div id="adminDashboardView" style="display: none;">
+                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">จัดการรีวิวร้านค้า</h3>
+                <div id="adminReviewList"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
+
+    <!-- Firebase Online Database SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        // Firebase Configuration (เชื่อมต่อฐานข้อมูลกลาง)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-placeholder-key",
+            authDomain: "hwa-market-v13.firebaseapp.com",
+            projectId: "hwa-market-v13",
+            storageBucket: "hwa-market-v13.appspot.com",
+            messagingSenderId: "987654321",
+            appId: "1:987654321:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const reviewsRef = collection(db, "reviews");
+
+        let globalReviews = [];
+        let currentRating = 5;
+
+        // Real-time listener: ดึงรีวิวจาก Server ออนไลน์เมื่อมีการอัปเดตแบบอัตโนมัติ
+        const q = query(reviewsRef, orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+            globalReviews = [];
+            snapshot.forEach((docSnap) => {
+                globalReviews.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            renderReviews();
+            if(document.getElementById('adminDashboardView').style.display === 'block') {
+                loadAdminReviews();
+            }
+        });
+
+        // Tab Navigation Logic
+        document.getElementById('navToReviews').addEventListener('click', function() {
+            document.getElementById('page-reviews').classList.add('active');
+            document.getElementById('page-pay').classList.remove('active');
+            document.getElementById('navToReviews').classList.add('active');
+            document.getElementById('navToPay').classList.remove('active');
+        });
+
+        document.getElementById('navToPay').addEventListener('click', function() {
+            document.getElementById('page-pay').classList.add('active');
+            document.getElementById('page-reviews').classList.remove('active');
+            document.getElementById('navToPay').classList.add('active');
+            document.getElementById('navToReviews').classList.remove('active');
+        });
+
+        // Copy Event Listener
+        document.querySelectorAll('.btn-copy').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const num = this.getAttribute('data-num');
+                navigator.clipboard.writeText(num).then(() => {
+                    showToast("คัดลอกเลขบัญชีแล้ว!");
+                });
+            });
+        });
+
+        // Rating Stars Selection
+        const starElems = document.querySelectorAll('#ratingStars i');
+        starElems.forEach(star => {
+            star.addEventListener('click', function() {
+                currentRating = parseInt(this.getAttribute('data-value'));
+                updateStarsUI();
+            });
+        });
+
+        function updateStarsUI() {
+            starElems.forEach(star => {
+                const val = parseInt(star.getAttribute('data-value'));
+                if (val <= currentRating) {
+                    star.classList.remove('fa-regular');
+                    star.classList.add('fa-solid', 'active');
+                } else {
+                    star.classList.remove('fa-solid', 'active');
+                    star.classList.add('fa-regular');
+                }
+            });
+        }
+
+        // Submit Review to Online Database
+        document.getElementById('submitReviewBtn').addEventListener('click', async function() {
+            const name = document.getElementById('reviewerName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+
+            if (!name || !text) {
+                alert('กรุณากรอกชื่อและข้อความรีวิวให้ครบถ้วนครับ');
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
+
+            try {
+                await addDoc(reviewsRef, {
+                    name: name,
+                    rating: currentRating,
+                    text: text,
+                    date: dateStr,
+                    timestamp: Date.now()
+                });
+
+                document.getElementById('reviewerName').value = '';
+                document.getElementById('reviewText').value = '';
+                currentRating = 5;
+                updateStarsUI();
+                showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
+            } catch (error) {
+                console.error("Error adding review: ", error);
+                showToast("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+            }
+        });
+
+        // Render Reviews List
+        function renderReviews() {
+            const revList = document.getElementById('reviewsDisplay');
+            revList.innerHTML = '';
+            document.getElementById('reviewCount').innerText = globalReviews.length;
+
+            if(globalReviews.length === 0) {
+                revList.innerHTML = '<p style="text-align:center; color:#999; padding:15px;">ยังไม่มีรีวิว เป็นคนแรกที่รีวิวเลย!</p>';
+                return;
+            }
+            
+            globalReviews.forEach(rev => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                
+                let stars = '';
+                for(let i=1; i<=5; i++) {
+                    stars += i <= rev.rating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
+                }
+
+                card.innerHTML = `
+                    <div class="review-header">
+                        <span class="reviewer-name">${escapeHtml(rev.name)}</span>
+                        <span class="review-stars">${stars}</span>
+                    </div>
+                    <div class="review-text">${escapeHtml(rev.text)}</div>
+                    <div class="review-date">${rev.date}</div>
+                `;
+                revList.appendChild(card);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2000);
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        // Admin Actions
+        document.getElementById('openAdminBtn').addEventListener('click', function() {
+            document.getElementById('adminModal').classList.add('active');
+            document.getElementById('adminLoginView').style.display = 'block';
+            document.getElementById('adminDashboardView').style.display = 'none';
+            document.getElementById('adminPasswordInput').value = '';
+        });
+
+        document.getElementById('closeAdminBtn').addEventListener('click', function() {
+            document.getElementById('adminModal').classList.remove('active');
+        });
+
+        document.getElementById('loginAdminBtn').addEventListener('click', function() {
+            const pass = document.getElementById('adminPasswordInput').value;
+            if (pass === '1234') {
+                document.getElementById('adminLoginView').style.display = 'none';
+                document.getElementById('adminDashboardView').style.display = 'block';
+                loadAdminReviews();
+            } else {
+                alert('รหัสผ่านไม่ถูกต้อง');
+            }
+        });
+
+        function loadAdminReviews() {
+            const adminRevList = document.getElementById('adminReviewList');
+            adminRevList.innerHTML = '';
+            if(globalReviews.length === 0) {
+                adminRevList.innerHTML = '<p style="text-align:center; color:#888;">ไม่มีรีวิวในระบบ</p>';
+                return;
+            }
+            globalReviews.forEach(rev => {
+                const div = document.createElement('div');
+                div.className = 'admin-item-row';
+                div.innerHTML = `
+                    <div>
+                        <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
+                        <small>${escapeHtml(rev.text)}</small>
+                    </div>
+                    <button class="btn-del" data-id="${rev.id}">ลบรีวิว</button>
+                `;
+                adminRevList.appendChild(div);
+            });
+
+            document.querySelectorAll('.btn-del').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const docId = this.getAttribute('data-id');
+                    try {
+                        await deleteDoc(doc(db, "reviews", docId));
+                        showToast("ลบรีวิวเรียบร้อยแล้ว");
+                    } catch (e) {
+                        alert("ไม่สามารถลบได้ กรุณาลองใหม่");
+                    }
+                });
+            });
+        }
+
+        // Sakura Effect Creator
+        function createSakura() {
+            const container = document.getElementById('sakuraContainer');
+            for(let i=0; i<15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.width = (Math.random() * 10 + 8) + 'px';
+                petal.style.height = (Math.random() * 10 + 8) + 'px';
+                petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                petal.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(petal);
+            }
+        }
+
+        createSakura();
+    </script>
+</body>
+</html>
