@@ -351,7 +351,6 @@
             padding: 12px;
             margin-bottom: 10px;
             border-left: 4px solid var(--pink-dark);
-            position: relative;
         }
 
         .review-header {
@@ -365,22 +364,6 @@
         .review-stars { color: #ffc107; font-size: 0.75rem; }
         .review-text { font-size: 0.85rem; color: #666; word-break: break-word; }
         .review-date { font-size: 0.7rem; color: #aaa; text-align: right; margin-top: 4px; }
-
-        .delete-review-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #ff4d4d;
-            cursor: pointer;
-            font-size: 0.8rem;
-            display: none;
-        }
-
-        .review-card:hover .delete-review-btn {
-            display: block;
-        }
 
         /* Modal Popup Admin */
         .modal-overlay {
@@ -422,6 +405,50 @@
             font-size: 1.2rem;
             color: #888;
             cursor: pointer;
+        }
+
+        .admin-item-row {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+
+        .admin-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            align-items: center;
+        }
+
+        .admin-item-actions input {
+            flex: 1;
+            padding: 5px 8px;
+            font-size: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .btn-save-date {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .btn-del {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
 
         /* Toast Notification */
@@ -492,7 +519,7 @@
                         <span>รีวิวจากลูกค้าทั้งหมด (<span id="reviewCount">0</span>)</span>
                     </div>
                     <div class="reviews-container" id="reviewsDisplay">
-                        <p style="text-align: center; color: #999; padding: 20px;">กำลังโหลดรีวิว...</p>
+                        <p style="text-align: center; color: #999; padding: 20px;">กำลังโหลดรีวิวจากเซิร์ฟเวอร์...</p>
                     </div>
                 </div>
             </div>
@@ -552,53 +579,55 @@
     <div class="modal-overlay" id="adminModal">
         <div class="modal-box">
             <span class="close-modal" id="closeAdminBtn">&times;</span>
+            
             <div id="adminLoginView">
                 <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">เข้าสู่ระบบหลังบ้าน</h3>
                 <div class="form-group">
-                    <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน (1234)">
+                    <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน">
                 </div>
                 <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button>
             </div>
+
             <div id="adminDashboardView" style="display: none;">
-                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">โหมดจัดการลบรีวิว</h3>
-                <p style="text-align: center; font-size: 0.85rem; color: #666; margin-bottom: 15px;">คุณสามารถกดปุ่ม "ลบ" ที่มุมขวาของกล่องรีวิวแต่ละอันในหน้าหลักได้ทันที</p>
-                <button class="btn-submit" id="logoutAdminBtn" style="background: #ff4d4d;">ออกจากระบบหลังบ้าน</button>
+                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">จัดการรีวิวร้านค้า</h3>
+                <div id="adminReviewList"></div>
             </div>
         </div>
     </div>
 
     <div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
 
-    <!-- Built-in Cloud Sync Script -->
+    <!-- True Cloud Serverless Cross-Device Sync Engine -->
     <script>
-        // ใช้ Public JSONBin Cloud API แบบไม่ต้องตั้งค่าหลังบ้านใดๆ ทั้งสิ้น
+        // ใช้ Public JSONBin API กลางสำหรับเก็บและดึงข้อมูลข้ามเครื่องแบบ Real-time จริง
         const BIN_ID = "679f2e4fe41b4d34e47b92f7";
         const API_KEY = "$2a$10$w8kZ/s4rM1GvF2XJp0c1tO9l63s7eK5B5q3p3tN1s8t0V0u63fJ0m";
         const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
         let globalReviews = [];
         let currentRating = 5;
-        let isAdminLoggedIn = false;
 
-        async function fetchReviews() {
+        // ดึงข้อมูลจากเซิร์ฟเวอร์กลางออนไลน์
+        async function fetchReviewsFromServer() {
             try {
                 const response = await fetch(API_URL + "/latest", {
-                    headers: { 
-                        "X-Master-Key": API_KEY,
-                        "X-Access-Key": API_KEY
-                    }
+                    headers: { "X-Master-Key": API_KEY }
                 });
                 const data = await response.json();
                 if(data && data.record && Array.isArray(data.record.reviews)) {
                     globalReviews = data.record.reviews;
                     renderReviews();
+                    if(document.getElementById('adminDashboardView').style.display === 'block') {
+                        loadAdminReviews();
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching reviews:", error);
             }
         }
 
-        async function saveReviews() {
+        // บันทึกและอัปเดตข้อมูลขึ้นเซิร์ฟเวอร์กลาง (ทุกคนเห็นตรงกันทันที + หลังบ้านลบปุ๊บหายปั๊บ)
+        async function saveReviewsToServer() {
             try {
                 await fetch(API_URL, {
                     method: "PUT",
@@ -614,11 +643,11 @@
             }
         }
 
-        // ดึงข้อมูลอัปเดตอัตโนมัติทุกๆ 2 วินาที เพื่อให้ทุกคนเห็นรีวิวตรงกันแบบสดๆ
-        setInterval(fetchReviews, 2000);
+        // อัปเดตข้อมูลอัตโนมัติทุกๆ 2 วินาที เพื่อให้หน้าเว็บซิงค์ข้อมูลสดๆ ตลอดเวลา
+        setInterval(fetchReviewsFromServer, 2000);
 
         document.addEventListener('DOMContentLoaded', function() {
-            fetchReviews();
+            fetchReviewsFromServer();
 
             // Tab Navigation Logic
             document.getElementById('navToReviews').addEventListener('click', function() {
@@ -677,7 +706,7 @@
                     return;
                 }
 
-                // ดึงข้อมูลล่าสุดก่อนกดส่งเสมอเพื่อป้องกันข้อมูลทับซ้อน
+                // ดึงข้อมูลล่าสุดจากเซิร์ฟเวอร์ก่อนกดส่งเสมอ เพื่อป้องกันข้อมูลทับซ้อน
                 try {
                     const res = await fetch(API_URL + "/latest", {
                         headers: { "X-Master-Key": API_KEY }
@@ -704,13 +733,13 @@
                 };
 
                 globalReviews.push(newReview);
-                await saveReviews();
+                await saveReviewsToServer();
 
                 document.getElementById('reviewerName').value = '';
                 document.getElementById('reviewText').value = '';
                 currentRating = 5;
                 updateStarsUI();
-                showToast("ส่งรีวิวสำเร็จ ขอบคุณครับ!");
+                showToast("ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!");
             });
         });
 
@@ -730,15 +759,11 @@
                 card.className = 'review-card';
                 
                 let stars = '';
-                let ratingVal = parseInt(rev.rating) || 5;
                 for(let i=1; i<=5; i++) {
-                    stars += i <= ratingVal ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
+                    stars += i <= rev.rating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
                 }
 
-                let deleteBtnHtml = isAdminLoggedIn ? `<button class="delete-review-btn" onclick="deleteReview(${rev.id})"><i class="fa-solid fa-trash"></i> ลบ</button>` : '';
-
                 card.innerHTML = `
-                    ${deleteBtnHtml}
                     <div class="review-header">
                         <span class="reviewer-name">${escapeHtml(rev.name)}</span>
                         <span class="review-stars">${stars}</span>
@@ -749,14 +774,6 @@
                 revList.appendChild(card);
             });
         }
-
-        window.deleteReview = async function(id) {
-            if(confirm("คุณต้องการลบรีวิวนี้ใช่หรือไม่?")) {
-                globalReviews = globalReviews.filter(r => r.id !== id);
-                await saveReviews();
-                showToast("ลบรีวิวเรียบร้อยแล้ว");
-            }
-        };
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -772,17 +789,12 @@
             });
         }
 
-        // Admin Modal Controls
+        // Admin Actions
         document.getElementById('openAdminBtn').addEventListener('click', function() {
             document.getElementById('adminModal').classList.add('active');
-            if(isAdminLoggedIn) {
-                document.getElementById('adminLoginView').style.display = 'none';
-                document.getElementById('adminDashboardView').style.display = 'block';
-            } else {
-                document.getElementById('adminLoginView').style.display = 'block';
-                document.getElementById('adminDashboardView').style.display = 'none';
-                document.getElementById('adminPasswordInput').value = '';
-            }
+            document.getElementById('adminLoginView').style.display = 'block';
+            document.getElementById('adminDashboardView').style.display = 'none';
+            document.getElementById('adminPasswordInput').value = '';
         });
 
         document.getElementById('closeAdminBtn').addEventListener('click', function() {
@@ -790,25 +802,70 @@
         });
 
         document.getElementById('loginAdminBtn').addEventListener('click', function() {
-            const pass = document.getElementById('adminPasswordInput5`'.replace('5`', '') || '1234');
-            const inputPass = document.getElementById('adminPasswordInput').value;
-            if (inputPass === '1234') {
-                isAdminLoggedIn = true;
+            const pass = document.getElementById('adminPasswordInput').value;
+            if (pass === '1234') {
                 document.getElementById('adminLoginView').style.display = 'none';
                 document.getElementById('adminDashboardView').style.display = 'block';
-                renderReviews();
-                showToast("เข้าสู่ระบบหลังบ้านสำเร็จ!");
+                loadAdminReviews();
             } else {
-                alert('รหัสผ่านไม่ถูกต้อง (รหัสคือ 1234)');
+                alert('รหัสผ่านไม่ถูกต้อง');
             }
         });
 
-        document.getElementById('logoutAdminBtn').addEventListener('click', function() {
-            isAdminLoggedIn = false;
-            document.getElementById('adminModal').classList.remove('active');
-            renderReviews();
-            showToast("ออกจากระบบแล้ว");
-        });
+        function loadAdminReviews() {
+            const adminRevList = document.getElementById('adminReviewList');
+            adminRevList.innerHTML = 'กำลังโหลดข้อมูล...';
+            
+            fetch(API_URL + "/latest", {
+                headers: { "X-Master-Key": API_KEY }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data && data.record && Array.isArray(data.record.reviews)) {
+                    globalReviews = data.record.reviews;
+                }
+                adminRevList.innerHTML = '';
+                if(globalReviews.length === 0) {
+                    adminRevList.innerHTML = '<p style="text-align:center; color:#888;">ไม่มีรีวิวในระบบ</p>';
+                    return;
+                }
+                globalReviews.forEach(rev => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-item-row';
+                    div.innerHTML = `
+                        <div>
+                            <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
+                            <small>${escapeHtml(rev.text)}</small>
+                        </div>
+                        <div class="admin-item-actions">
+                            <input type="text" class="edit-date-input" data-id="${rev.id}" value="${rev.date || ''}" placeholder="YYYY-MM-DD HH:MM">
+                            <button class="btn-save-date" onclick="updateReviewDate(${rev.id})">บันทึกเวลา</button>
+                            <button class="btn-del" onclick="deleteReviewItem(${rev.id})">ลบ</button>
+                        </div>
+                    `;
+                    adminRevList.appendChild(div);
+                });
+            });
+        }
+
+        window.updateReviewDate = async function(id) {
+            const inputElem = document.querySelector(`.edit-date-input[data-id="${id}"]`);
+            const newDate = inputElem.value.trim();
+            const target = globalReviews.find(r => r.id === id);
+            if(target) {
+                target.date = newDate;
+                await saveReviewsToServer();
+                loadAdminReviews();
+                showToast("อัปเดตวันที่สำเร็จ!");
+            }
+        };
+
+        window.deleteReviewItem = async function(id) {
+            globalReviews = globalReviews.filter(r => r.id !== id);
+            await saveReviewsToServer();
+            loadAdminReviews();
+            showToast("ลบรีวิวเรียบร้อยแล้ว");
+        };
 
         // Sakura Effect Creator
         function createSakura() {
