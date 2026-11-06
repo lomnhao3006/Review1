@@ -7,7 +7,7 @@
     
     <!-- Meta & Open Graph Tags -->
     <meta property="og:title" content="HWA FREEDOM MARKET V.13">
-    <meta property="og:description" content="รีวิวจากลูกค้า รีวิวหลังการซื้อขายของทางร้าน - ช่องทางชำระเงินและรีวิว">
+    <meta property="og:description" content="รีวิวจากลูกค้า รีวิวหลังการซื้อขาย - ช่องทางชำระเงินและรีวิว">
     <meta property="og:image" content="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ">
     <meta property="og:type" content="website">
 
@@ -408,21 +408,44 @@
         }
 
         .admin-item-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             background: #f9f9f9;
             padding: 10px;
             border-radius: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             border: 1px solid #eee;
+        }
+
+        .admin-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            align-items: center;
+        }
+
+        .admin-item-actions input {
+            flex: 1;
+            padding: 5px 8px;
+            font-size: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .btn-save-date {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .btn-del {
             background: #ff4d4d;
             color: white;
             border: none;
-            padding: 4px 8px;
+            padding: 5px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -453,7 +476,7 @@
 
     <div class="app-card">
         <div class="header-banner">
-            <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้านจัดการรีวิว">
+            <button class="admin-btn" id="openAdminBtn" title="ระบบหลังบ้าน">
                 <i class="fa-solid fa-gear"></i>
             </button>
             <img src="https://lh3.googleusercontent.com/d/1-l4qhdyrMx98uhEuQGEQbLHxoqSY5PLQ" alt="Banner ปก">
@@ -462,7 +485,7 @@
         <div class="content">
             <div class="store-title">
                 <h1>LOMNHAO STORE</h1>
-                <p>รีวิวจากลูกค้า รีวิวหลังการซื้อขายของทางร้าน</p>
+                <p>รีวิวจากลูกค้า รีวิวหลังการซื้อขาย</p>
             </div>
 
             <!-- VIEW 1: Main Reviews Page -->
@@ -516,7 +539,7 @@
                     <div id="paymentListDisplay">
                         <div class="payment-item">
                             <div class="payment-info">
-                                <div class="bank-icon scb">K PLUS</div>
+                                <div class="bank-icon scb">SCB</div>
                                 <div class="payment-details">
                                     <h4>ธนาคารกสิกรไทย</h4>
                                     <p>1653748740</p>
@@ -560,9 +583,9 @@
             <div id="adminLoginView">
                 <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">เข้าสู่ระบบหลังบ้าน</h3>
                 <div class="form-group">
-                    <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน ">
+                    <input type="password" id="adminPasswordInput" class="form-input" placeholder="กรอกรหัสผ่านหลังบ้าน">
                 </div>
-                <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button
+                <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button>
             </div>
 
             <div id="adminDashboardView" style="display: none;">
@@ -577,9 +600,8 @@
     <!-- Firebase Online Database SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // Firebase Configuration (เชื่อมต่อฐานข้อมูลกลาง)
         const firebaseConfig = {
             apiKey: "AIzaSyD-placeholder-key",
             authDomain: "hwa-market-v13.firebaseapp.com",
@@ -589,7 +611,6 @@
             appId: "1:987654321:web:abcdef123456"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const reviewsRef = collection(db, "reviews");
@@ -597,7 +618,7 @@
         let globalReviews = [];
         let currentRating = 5;
 
-        // Real-time listener: ดึงรีวิวจาก Server ออนไลน์เมื่อมีการอัปเดตแบบอัตโนมัติ
+        // Real-time listener: ดึงรีวิวออนไลน์อัตโนมัติทุกคนเห็นตรงกัน
         const q = query(reviewsRef, orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             globalReviews = [];
@@ -668,7 +689,11 @@
             }
 
             const now = new Date();
-            const dateStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
+            const dateStr = now.getFullYear() + '-' + 
+                            String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                            String(now.getDate()).padStart(2, '0') + ' ' + 
+                            String(now.getHours()).padStart(2, '0') + ':' + 
+                            String(now.getMinutes()).padStart(2, '0');
 
             try {
                 await addDoc(reviewsRef, {
@@ -716,7 +741,7 @@
                         <span class="review-stars">${stars}</span>
                     </div>
                     <div class="review-text">${escapeHtml(rev.text)}</div>
-                    <div class="review-date">${rev.date}</div>
+                    <div class="review-date">${rev.date || ''}</div>
                 `;
                 revList.appendChild(card);
             });
@@ -730,6 +755,7 @@
         }
 
         function escapeHtml(text) {
+            if(!text) return '';
             return text.replace(/[&<>"']/g, function(m) {
                 return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
             });
@@ -773,11 +799,33 @@
                         <strong>${escapeHtml(rev.name)} (${rev.rating} ดาว)</strong><br>
                         <small>${escapeHtml(rev.text)}</small>
                     </div>
-                    <button class="btn-del" data-id="${rev.id}">ลบรีวิว</button>
+                    <div class="admin-item-actions">
+                        <input type="text" class="edit-date-input" data-id="${rev.id}" value="${rev.date || ''}" placeholder="YYYY-MM-DD HH:MM">
+                        <button class="btn-save-date" data-id="${rev.id}">บันทึกเวลา</button>
+                        <button class="btn-del" data-id="${rev.id}">ลบ</button>
+                    </div>
                 `;
                 adminRevList.appendChild(div);
             });
 
+            // Save Date Action
+            document.querySelectorAll('.btn-save-date').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const docId = this.getAttribute('data-id');
+                    const inputElem = document.querySelector(`.edit-date-input[data-id="${docId}"]`);
+                    const newDate = inputElem.value.trim();
+
+                    try {
+                        const docRef = doc(db, "reviews", docId);
+                        await updateDoc(docRef, { date: newDate });
+                        showToast("อัปเดตวันที่สำเร็จ!");
+                    } catch (e) {
+                        alert("ไม่สามารถอัปเดตวันที่ได้ กรุณาลองใหม่");
+                    }
+                });
+            });
+
+            // Delete Review Action
             document.querySelectorAll('.btn-del').forEach(btn => {
                 btn.addEventListener('click', async function() {
                     const docId = this.getAttribute('data-id');
