@@ -560,8 +560,8 @@
                 <button class="btn-submit" id="loginAdminBtn">เข้าสู่ระบบ</button>
             </div>
             <div id="adminDashboardView" style="display: none;">
-                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">จัดการลบรีวิว</h3>
-                <p style="text-align: center; font-size: 0.85rem; color: #666; margin-bottom: 10px;">คุณสามารถกดปุ่มลบที่รายการรีวิวหน้าหลักได้ทันทีเมื่อเข้าสู่ระบบ</p>
+                <h3 style="text-align: center; color: var(--pink-dark); margin-bottom: 15px;">โหมดจัดการลบรีวิว</h3>
+                <p style="text-align: center; font-size: 0.85rem; color: #666; margin-bottom: 15px;">คุณสามารถกดปุ่ม "ลบ" ที่มุมขวาของกล่องรีวิวแต่ละอันในหน้าหลักได้ทันที</p>
                 <button class="btn-submit" id="logoutAdminBtn" style="background: #ff4d4d;">ออกจากระบบหลังบ้าน</button>
             </div>
         </div>
@@ -569,9 +569,9 @@
 
     <div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
 
-    <!-- Universal Cloud JSON API Sync Engine -->
+    <!-- Built-in Cloud Sync Script -->
     <script>
-        // ใช้ Public JSONBin API กลางสำหรับเก็บและซิงค์ข้อมูลรีวิวข้ามอุปกรณ์แบบ Real-time
+        // ใช้ Public JSONBin Cloud API แบบไม่ต้องตั้งค่าหลังบ้านใดๆ ทั้งสิ้น
         const BIN_ID = "679f2e4fe41b4d34e47b92f7";
         const API_KEY = "$2a$10$w8kZ/s4rM1GvF2XJp0c1tO9l63s7eK5B5q3p3tN1s8t0V0u63fJ0m";
         const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
@@ -790,8 +790,9 @@
         });
 
         document.getElementById('loginAdminBtn').addEventListener('click', function() {
-            const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === '1234') {
+            const pass = document.getElementById('adminPasswordInput5`'.replace('5`', '') || '1234');
+            const inputPass = document.getElementById('adminPasswordInput').value;
+            if (inputPass === '1234') {
                 isAdminLoggedIn = true;
                 document.getElementById('adminLoginView').style.display = 'none';
                 document.getElementById('adminDashboardView').style.display = 'block';
